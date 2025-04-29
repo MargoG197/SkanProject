@@ -1,10 +1,9 @@
-
+import "./index.css"
 
 const Footer = () => {
   return (
-    <footer style={{
-      position: 'fixed',
-      bottom: '0px',
+    <footer
+     style={{
       backgroundColor: '#029491',
       fontFamily: 'Arial, sans-serif',
       color: '#333',
@@ -14,15 +13,15 @@ const Footer = () => {
       boxSizing: "border-box",
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between',
+        justifyContent: 'space-between',
+      
     }}>
       {/* Логотип и название */}
-       <div style={{ width: '100px', height: 'auto', paddingLeft: '60px',}}>
+       <div style={{ width: '100px', height: 'auto'}}>
         <img src='../src/icons/FooterLogo.svg' alt="CKAH Logo" style={{ width: '100px', height: 'auto' }} />
       </div>
       
       <div style={{
-        margin: '0px 45px 0px',
         display: 'flex',
         justifyContent: 'space-between'
       }}>

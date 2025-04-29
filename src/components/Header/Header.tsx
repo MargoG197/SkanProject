@@ -1,10 +1,12 @@
 import { useAuth } from '../../context/AuthContext';
-
+import './index.css'
 const Header = () => {
   const { isAuthenticated, login, logout } = useAuth(); // Получаем данные из контекста
 
   return (
-    <header style={{
+    <header
+      
+      style={{
       backgroundColor: '#ffffff',
       boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
       padding: '20px 40px',
@@ -12,17 +14,18 @@ const Header = () => {
       justifyContent: 'space-between',
       alignItems: 'center',
       fontFamily: 'Arial, sans-serif',
-      width: '100%',
       boxSizing: 'border-box',
       height: '93px'
     }}>
       {/* Логотип и название */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      <div
+        style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
+      >
       <img src='../src/icons/ColorLogo.svg' alt="CKAH Logo" style={{ width: '100px', height: 'auto' }} />
       </div>
 
       {/* Навигация */}
-      <nav>
+      <nav className='navigation'>
         <ul style={{
           display: 'flex',
           listStyle: 'none',
@@ -34,11 +37,9 @@ const Header = () => {
           <li><a href="/" style={{ textDecoration: 'none', color: '#333' }}>Главная</a></li>
           <li><a href="/tariffs" style={{ textDecoration: 'none', color: '#333' }}>Тарифы</a></li>
           <li><a href="/faq" style={{ textDecoration: 'none', color: '#333' }}>FAQ</a></li>
-
           {/* Блок для авторизованных пользователей */}
           {isAuthenticated ? (
             <>
-
               {/* Имя пользователя и кнопка выхода */}
               <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <span style={{ color: '#333' }}>{isAuthenticated || 'Алексей А.'}</span>
@@ -57,7 +58,6 @@ const Header = () => {
               </li>
             </>
           ) : (
-            /* Блок для неавторизованных */
             <>
               <li>
                 <a href="/register" style={{

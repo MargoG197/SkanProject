@@ -1,0 +1,10 @@
+footer {
+padding: 0 40px
+}
+
+@media (max-width: 400px) {
+ footer{
+padding: 0 19px
+ }
+  }
+  

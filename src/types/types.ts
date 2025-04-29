@@ -7,6 +7,7 @@ type TTariff = {
   includedInPrice: string[]
   bg: string
   svg: string
+  textColor:string
 }
 
 

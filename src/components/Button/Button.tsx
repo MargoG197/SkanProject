@@ -4,22 +4,24 @@ import './index.css'
 type TButtonProps = {
   onClickFunc: () => void
   btnText: string
-  bg:string
+  bg: string
+  textColor:string
 }
 
 
-const Button:React.FC<TButtonProps> = ({onClickFunc, btnText, bg}) => {
+const Button:React.FC<TButtonProps> = ({onClickFunc, btnText, bg, textColor}) => {
   
   return (
     <>
       <button
-        className='button'
+      className='button'
       onClick={onClickFunc}
       style={{
-      width: '100%',
+      
+        height: '59px',
       padding: '12px 0',
       backgroundColor: `${bg}`,
-      color: 'white',
+      color: `${textColor}`,
       border: 'none',
       borderRadius: '6px',
       fontSize: '16px',

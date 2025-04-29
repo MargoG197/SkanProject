@@ -9,7 +9,9 @@ export const prices:TTariff[] = [
     priceCondition: "или 150 ₽/мес. при рассрочке на 24 мес.",
     includedInPrice: ["Безлимитная история запросов", "Безопасная сделка", "Поддержка 24/7"],
     bg: '#FFB64F',
-    svg: '../src/icons/beginner.svg'
+    svg: '../src/icons/beginner.svg',
+    textColor: "#000000"
+
   },
   {
     name:  "Pro",
@@ -19,7 +21,8 @@ export const prices:TTariff[] = [
     priceCondition: "или 279 ₽/мес. при рассрочке на 24 мес.",
     includedInPrice: ["Все пункты тарифа Beginner", "Экспорт истории", "Рекомендации по приоритетам"],
     bg: '#7CE3E1',
-    svg: '../src/icons/pro.svg'
+    svg: '../src/icons/pro.svg',
+    textColor: "#000000"
   },
   {
     name: "Business",
@@ -29,6 +32,7 @@ export const prices:TTariff[] = [
     priceCondition: null,
     includedInPrice: ["Все пункты тарифа Pro", "Безлимитное количество запросов", "Приоритетная поддержка"],
     bg: '#000000',
-    svg: '../src/icons/business.svg'
+    svg: '../src/icons/business.svg',
+    textColor: "#FFFFFF"
 }
 ]

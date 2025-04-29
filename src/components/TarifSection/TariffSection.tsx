@@ -1,20 +1,29 @@
 import { prices } from "../../mockData/mockData";
-import TarifCard from "../TariffCard/TariffCard";
+import TarifCard from "../cards/TariffCard/TariffCard";
 import React from "react";
+import { useAuth } from "../../context/AuthContext";
+import './index.css'
 
 
 const TariffSection = () => {
   
+  const { isAuthenticated } = useAuth()
 
   return (
-    <div style={{
+     <div 
+    className='tarifdiv'
+    style = {{
       display: 'flex',
-      flexDirection:'column',
-     maxWidth: '1320px',
+      flexDirection: 'column',
+      padding: 0,
+      maxWidth: '1320px',
+       minWidth: '335px',
+       margin: '0 0 118px 0',
       justifyContent: 'space-between',
-      alignSelf:'center'
+      boxSizing: 'border-box'
     }}>
       <div
+        className="ourPrices"
          style={{
           fontWeight: '900',
           fontSize: '45px',
@@ -25,26 +34,28 @@ const TariffSection = () => {
         Наши тарифы
     </div>
       
-       <div
+      <div
+        className="tariffs"
       style={{
         display: 'flex',
         justifyContent: 'space-between',
         gap: '37px',
-        justifySelf: 'center'
+        padding: 0,
+        margin: 0,
+        minWidth: '335px'
       }}
     >
      
       {
       prices.map((price, index) =>
       <React.Fragment key={index}>
-        <TarifCard isActive={ index == 0 ? true : false} tarif={price}/>
+        <TarifCard isActive={ !isAuthenticated  ? false : index == 0 ? true : false} tarif={price}/>
       </React.Fragment> 
     )
     } 
     </div>
     </div>
-   
-    
+       
   )
 }
 
