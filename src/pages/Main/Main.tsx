@@ -3,7 +3,7 @@ import Footer from "../../components/Footer/Footer";
 import TariffSection from "../../components/TarifSection/TariffSection";
 import PicSection from "../../components/PicSection/PicSection";
 import AboutUsSection from "../../components/AboutUsSection/AboutUsSection";
-
+import TitleSection from "../../components/TitleSection/TitleSection";
 
 const Main = () => {
   
@@ -18,6 +18,7 @@ const Main = () => {
       justifyContent: 'space-between',
     }}>
       <Header />
+      <TitleSection />
       <AboutUsSection />
       <PicSection />
       <TariffSection />

@@ -5,11 +5,12 @@ type TButtonProps = {
   onClickFunc: () => void
   btnText: string
   bg: string
-  textColor:string
+  textColor: string
+  maxWidth?: number
 }
 
 
-const Button:React.FC<TButtonProps> = ({onClickFunc, btnText, bg, textColor}) => {
+const Button:React.FC<TButtonProps> = ({onClickFunc, btnText, bg, textColor, maxWidth= 355}) => {
   
   return (
     <>
@@ -17,8 +18,10 @@ const Button:React.FC<TButtonProps> = ({onClickFunc, btnText, bg, textColor}) =>
       className='button'
       onClick={onClickFunc}
       style={{
-      
-        height: '59px',
+  
+      height: '59px',
+      width: '100%',
+      maxWidth:`${maxWidth}px`,
       padding: '12px 0',
       backgroundColor: `${bg}`,
       color: `${textColor}`,

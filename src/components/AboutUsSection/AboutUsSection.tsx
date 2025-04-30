@@ -48,7 +48,7 @@ const AboutUsSection = () => {
       currentPosition == 0 ? 0 : currentPosition + ( screenWidth >= 575 ? 430 : 308)
     );
   };
-  console.log(currentPosition, "currentPosition")
+
 
   return (
     <div
