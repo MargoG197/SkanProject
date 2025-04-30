@@ -12,13 +12,13 @@ const Footer = () => {
       height: '137px',
       boxSizing: "border-box",
       display: 'flex',
-      alignItems: 'center',
-        justifyContent: 'space-between',
+      position:'relative',
+      justifyContent: 'space-between',
       
     }}>
       {/* Логотип и название */}
        <div style={{ width: '100px', height: 'auto'}}>
-        <img src='../src/icons/FooterLogo.svg' alt="CKAH Logo" style={{ width: '100px', height: 'auto' }} />
+        <img className="logo" src='../src/icons/FooterLogo.svg' alt="CKAH Logo" style={{ width: '100px', height: 'auto' }} />
       </div>
       
       <div style={{

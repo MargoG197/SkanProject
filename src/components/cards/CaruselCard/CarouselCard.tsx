@@ -4,11 +4,13 @@ import './index.css'
 interface CarouselCardProps {
   svg: string
   text: string;
+screen: 'mobile'|'pc'
 }
 
 const CarouselCard: React.FC<CarouselCardProps> = ({
   text,
-  svg
+  svg,
+  screen
 }) => {
   return (
     <div
@@ -16,12 +18,12 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
     style={{
     backgroundColor: '#ffffff',
     color: '#333333',
-      width: '400px',
-    minWidth: '400px',
-      height: '255px',
-    minHeight: '255px',
+    width: `${screen == 'mobile' ? 298 : 400}px`,
+    minWidth: `${screen == 'mobile' ? 298 : 400}px`,
+    height: `${screen == 'mobile' ? 188 : 225}px`,
+    minHeight: `${screen == 'mobile' ? 188 : 225}px`,
     borderRadius: '12px',
-    padding: '30px 24px',
+    padding: `${screen == 'mobile' ? '12px' : '30px 24px'}` ,
     boxSizing:'border-box',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
     display: 'flex',
@@ -34,7 +36,7 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
     cursor: 'pointer',
       }}
     >
-    <img src={svg} alt="card" style={{ width: '65px', height: '79px' }} />
+    <img src={svg} alt="card" style={{ width: `${screen == 'mobile' ? 35 : 65}px`, height: `${screen == 'mobile' ? 45 : 79}px` }} />
     <p style={{ margin: 0, textAlign:'left'}}>{text}</p>
     </div>
   );
