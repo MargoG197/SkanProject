@@ -1,4 +1,5 @@
 import { useAuth } from '../../context/AuthContext';
+import LimitCard from '../cards/LimitCard/LimitCard';
 import './index.css'
 const Header = () => {
   const { isAuthenticated, login, logout } = useAuth(); // Получаем данные из контекста
@@ -9,45 +10,42 @@ const Header = () => {
       style={{
       backgroundColor: '#ffffff',
       boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-      padding: '20px 40px',
+      padding: '0 60px',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      fontFamily: 'Arial, sans-serif',
       boxSizing: 'border-box',
       height: '93px'
     }}>
       {/* Логотип и название */}
-      <div
-        style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
-      >
       <img src='../src/icons/ColorLogo.svg' alt="CKAH Logo" style={{ width: '100px', height: 'auto' }} />
-      </div>
-
       {/* Навигация */}
       <nav className='navigation'>
         <ul style={{
           display: 'flex',
           listStyle: 'none',
-          margin: 0,
-          padding: 0,
+          width:'fit-content',
           gap: '30px',
-          alignItems: 'center'
+          alignItems: 'center',
+          boxSizing: 'border-box',
         }}>
           <li><a href="/" style={{ textDecoration: 'none', color: '#333' }}>Главная</a></li>
-          <li><a href="/tariffs" style={{ textDecoration: 'none', color: '#333' }}>Тарифы</a></li>
-          <li><a href="/faq" style={{ textDecoration: 'none', color: '#333' }}>FAQ</a></li>
+          <li><a href="/" style={{ textDecoration: 'none', color: '#333' }}>Тарифы</a></li>
+          <li><a href="/" style={{ textDecoration: 'none', color: '#333' }}>FAQ</a></li>
           {/* Блок для авторизованных пользователей */}
-          {isAuthenticated ? (
-            <>
+          </ul>
+      </nav>
+      {isAuthenticated ? (
+        <>
+          <LimitCard />
               {/* Имя пользователя и кнопка выхода */}
-              <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ display: 'flex', flexDirection:'column', alignItems: 'center', gap: '10px' }}>
                 <span style={{ color: '#333' }}>{isAuthenticated || 'Алексей А.'}</span>
                 <button 
                   onClick={logout}
                   style={{
                     backgroundColor: 'transparent',
-                    border: '1px solid #ddd',
+                    border: 'none',
                     borderRadius: '4px',
                     padding: '5px 10px',
                     cursor: 'pointer'
@@ -55,32 +53,55 @@ const Header = () => {
                 >
                   Выйти
                 </button>
-              </li>
+              </div>
             </>
           ) : (
-            <>
-              <li>
+              <div
+              style={{width:'251px', minWidth:'251px', gap:'18px', display:'flex', justifyContent:'space-between', boxSizing: 'border-box', alignItems:'center'}}
+          >
+             <ul style={{
+          display: 'flex',
+          listStyle: 'none',
+          width:'fit-content',
+          gap: '30px',
+          alignItems: 'center',
+          boxSizing: 'border-box',
+            }}>
+               <li>
                 <a href="/register" style={{
                   textDecoration: 'none',
-                  color: '#fff',
-                  backgroundColor: '#1890ff',
-                  padding: '8px 16px',
-                  borderRadius: '4px'
+                  color: '#D9D1D2',
+                  padding: '8px 0',
+                  borderRadius: '4px',
                 }}>Зарегистрироваться</a>
-              </li>
-              <li>
+                </li>
+               <div
+                style={{
+                  backgroundColor: '#029491',
+                  width: '2px',
+                  minWidth:'2px',
+                  height: '26px',
+                }}
+                ></div>
+                <li>
                 <a href="/login" style={{
                   textDecoration: 'none',
-                  color: '#1890ff',
-                  border: '1px solid #1890ff',
-                  padding: '8px 16px',
-                  borderRadius: '4px'
+                  backgroundColor: '#7CE3E1',
+                  fontSize: '14px',
+                  color:'black',
+                  fontWeight: '500',
+                  height: '26px',
+                  width: '65px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems:'center',
+                  borderRadius: '4px',
+                  boxSizing: 'border-box',
                 }}>Войти</a>
               </li>
-            </>
+            </ul>
+          </div>
           )}
-        </ul>
-      </nav>
     </header>
   );
 };
