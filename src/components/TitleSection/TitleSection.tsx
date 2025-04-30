@@ -25,10 +25,26 @@ const TitleSection = () => {
 
   return (
     <div
-    style={{display:'flex', flexDirection:`${screenWidth >= 676? "row": "column"}`, alignItems:'center', width:'100%', paddingLeft:'20px', justifyContent:`${screenWidth >= 1360 ?  'space-between': "center"}`, maxWidth:'1320px', height:"fit-content", margin:"69px 0"}}
+      style={{
+        display: 'flex',
+        flexDirection: `${screenWidth >= 676 ? "row" : "column"}`,
+        alignItems: 'center', width: '100%',
+        marginLeft: '20px',
+        justifyContent: `${screenWidth >= 1360 ? 'space-between' : "center"}`,
+        maxWidth: '1320px',
+        height: "fit-content",
+        margin: "69px 0"
+      }}
     >
       <div
-        style={{ display: 'flex', alignItems:`${screenWidth >= 842? "flex-start" :"center"}`, flexDirection: 'column', justifyContent: 'flex-start', gap:`${screenWidth >= 842 ? "70px" : "30px"}`, width:`${screenWidth >= 1360 ? "100%" : screenWidth >= 842 ?  "500px": "400px"}`}}  >
+        style={{
+          display: 'flex',
+          alignItems: `${screenWidth >= 842 ? "flex-start" : "center"}`,
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+          gap: `${screenWidth >= 842 ? "70px" : "30px"}`,
+          width: `${screenWidth >= 1360 ? "100%" : screenWidth >= 842 ? "500px" : "400px"}`
+        }}  >
         <div
         style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
         >

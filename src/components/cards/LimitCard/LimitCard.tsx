@@ -3,13 +3,14 @@ const LimitCard = () => {
     <div
       style={{
         width: "175px",
+        minWidth:"175px",
         height: "63px",
         borderRadius: "12px",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+        padding: '0 8px',
         display: "flex",
         flexDirection: 'column',
         justifyContent: 'center',
-        padding: '0 8px',
         alignItems:'flex-end',
         backgroundColor: "#D9D9D9",
         boxSizing: "border-box",
@@ -31,7 +32,7 @@ const LimitCard = () => {
         >
           <p
             style={{
-              fontSize: "12px",
+              fontSize: "10px",
               color: "#666",
               margin: "0"
             }}
@@ -41,7 +42,7 @@ const LimitCard = () => {
           </p>
           <p
             style={{
-              fontSize: "12px",
+              fontSize: "10px",
               color: "#666",
               margin: "0",
             }}

@@ -1,9 +1,10 @@
+import { JSX } from 'react'
 import './index.css'
 
 
 type TButtonProps = {
   onClickFunc: () => void
-  btnText: string
+  btnText: string|JSX.Element
   bg: string
   textColor: string
   maxWidth?: number
@@ -18,7 +19,6 @@ const Button:React.FC<TButtonProps> = ({onClickFunc, btnText, bg, textColor, max
       className='button'
       onClick={onClickFunc}
       style={{
-  
       height: '59px',
       width: '100%',
       maxWidth:`${maxWidth}px`,
