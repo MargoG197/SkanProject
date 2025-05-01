@@ -1,18 +1,17 @@
-
-body{
-  padding: 0;
+body {
+	 padding: 0;
   margin: 0;
   box-sizing: border-box;
-}
-
-body {
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
 }
 
-
+:root{
+	max-width: screen;
+	overflow-x: hidden;
+}
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

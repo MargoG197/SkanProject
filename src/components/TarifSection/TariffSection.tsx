@@ -16,8 +16,7 @@ const TariffSection = () => {
       display: 'flex',
       flexDirection: 'column',
       padding: 0,
-      maxWidth: '1320px',
-       minWidth: '335px',
+			width: '90%',
        margin: '0 0 118px 0',
       justifyContent: 'space-between',
       boxSizing: 'border-box'

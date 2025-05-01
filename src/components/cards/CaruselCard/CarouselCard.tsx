@@ -18,8 +18,8 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
     style={{
     backgroundColor: '#ffffff',
     color: '#333333',
-    width: `${screen == 'mobile' ? 298 : 400}px`,
-    minWidth: `${screen == 'mobile' ? 298 : 400}px`,
+    width: `${screen == 'mobile' ? 290 : 400}px`,
+    minWidth: `${screen == 'mobile' ? 290 : 400}px`,
     height: `${screen == 'mobile' ? 188 : 225}px`,
     minHeight: `${screen == 'mobile' ? 188 : 225}px`,
     borderRadius: '12px',
@@ -36,7 +36,8 @@ const CarouselCard: React.FC<CarouselCardProps> = ({
     cursor: 'pointer',
       }}
     >
-    <img src={svg} alt="card" style={{ width: `${screen == 'mobile' ? 35 : 65}px`, height: `${screen == 'mobile' ? 45 : 79}px` }} />
+    <img src={svg} alt="card" style={{ width: `${screen == 'mobile' ? 35 : 65}px`,
+		 height: `${screen == 'mobile' ? 45 : 79}px` }} />
     <p style={{ margin: 0, textAlign:'left'}}>{text}</p>
     </div>
   );

@@ -39,28 +39,29 @@ const AboutUsSection = () => {
 
   const nextSlide = () => {
     setCurrentPosition(() =>
-      currentPosition == -(( screenWidth >= 575 ? 430 : 308) * (text.length - (screenWidth >= 1375 ? 3 : screenWidth >=924 ? 2 : 1 ))) ? 0 : currentPosition - ( screenWidth >= 575 ? 430 : 308)
+      currentPosition == -(( screenWidth >= 575 ? 430 : 300) * (text.length - (screenWidth >= 1375 ? 3 : screenWidth >=924 ? 2 : 1 ))) ? 0 : currentPosition - ( screenWidth >= 575 ? 430 : 300)
     );
   };
 
   const prevSlide = () => {
     setCurrentPosition(() =>
-      currentPosition == 0 ? 0 : currentPosition + ( screenWidth >= 575 ? 430 : 308)
+      currentPosition == 0 ? 0 : currentPosition + ( screenWidth >= 575 ? 430 : 300)
     );
   };
 
 
   return (
     <div
+		className="AboutUsSection"
       style={{
         display: "flex",
         flexDirection: "column",
-        width: "100%",
-        maxWidth: (screenWidth >=1375 ? '1375px' : screenWidth >= 924 ? '970px': screenWidth >= 575 ? '520px' : '410px'),
+        width: "90%",
         alignItems: "flex-start",
       }}
     >
       <h1
+			className="AboutUsSectionH1"
         style={{
           fontWeight: "900",
           fontSize: "45px",
@@ -75,7 +76,6 @@ const AboutUsSection = () => {
           display: "flex",
           justifyItems: 'center',
           width: "100%",
-          minHeight: ( screenWidth >= 575 ? '280px' : '230px' ),
           alignItems: "center",
           justifyContent: "space-around",
         }}
@@ -102,7 +102,8 @@ const AboutUsSection = () => {
         </div>
         <div
           style={{
-            maxWidth: (screenWidth >=1375 ? '1270px' : screenWidth >= 924 ? '840px': screenWidth >= 575 ? '410px' : '308px' ),
+						// maxWidth:"90%",
+            maxWidth: (screenWidth >=1375 ? '1270px' : screenWidth >= 924 ? '840px': screenWidth >= 575 ? '410px' : '290px' ),
             overflowX: "hidden",
           }}
         >
@@ -112,9 +113,6 @@ const AboutUsSection = () => {
               display: "flex",
               justifyContent: "space-between",
               width: "100%",
-              maxWidth:  (screenWidth >=1375 ? '1270px' : screenWidth >= 924 ? '830px': screenWidth >= 575 ? '400px' : '300px' ),
-              gap: (screenWidth >= 575 ? '30px': '10px'),
-              minHeight: ( screenWidth >= 575 ? '280px' : '230px' ),
               alignItems: "flex-start",
               padding: "5px 5px",
               transform: `translateX(${currentPosition}px)`,
@@ -145,10 +143,10 @@ const AboutUsSection = () => {
             style={{
               transform: "rotate(180deg)",
               cursor: `${
-                currentPosition == -(( screenWidth >= 575 ? 430 : 298) * (text.length - (screenWidth >= 1375 ? 3 : screenWidth >=924 ? 2 : 1 ))) ? "" : "pointer"
+                currentPosition == -(( screenWidth >= 575 ? 430 : 290) * (text.length - (screenWidth >= 1375 ? 3 : screenWidth >=924 ? 2 : 1 ))) ? "" : "pointer"
               }`,
               backgroundColor: `${
-                currentPosition == -(( screenWidth >= 575 ? 430 : 298) * (text.length - (screenWidth >= 1375 ? 3 : screenWidth >=924 ? 2 : 1 ))) ? "" : ""
+                currentPosition == -(( screenWidth >= 575 ? 430 : 290) * (text.length - (screenWidth >= 1375 ? 3 : screenWidth >=924 ? 2 : 1 ))) ? "" : ""
               }`,
             }}
           />
