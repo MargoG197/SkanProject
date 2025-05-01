@@ -2,7 +2,7 @@
 import { useAuth } from "../../context/AuthContext";
 import LimitCard from "../cards/LimitCard/LimitCard";
 import "./index.css";
-import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
+import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
 const Header = () => {
   const { isAuthenticated, login, logout } = useAuth(); // Получаем данные из контекста
@@ -153,7 +153,7 @@ const Header = () => {
               </a>
             </div>
           )}
-					<HamburgerMenu />
+					<BurgerMenu />
         </div>
       </div>
     </header>

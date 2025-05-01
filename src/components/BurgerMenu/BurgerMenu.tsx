@@ -209,7 +209,7 @@ import "./index.css";
 import { createPortal } from "react-dom";
 import { useState, useEffect } from "react";
 
-const HamburgerMenu = () => {
+const BurgerMenu = () => {
   const { isAuthenticated, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -453,4 +453,4 @@ const HamburgerMenu = () => {
   );
 };
 
-export default HamburgerMenu;
+export default BurgerMenu;
