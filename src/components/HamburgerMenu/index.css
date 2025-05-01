@@ -1,12 +1,10 @@
-/* .burgerMenu{
-	display: none;
-}
-.BurgerMenuScanLogo{
+.burgerMenuIcon{
 	display: none;
 }
 
+
 @media (max-width: 707px){
-	.burgerMenu{
-		display: block;
+	.burgerMenuIcon{
+		display: flex;
 	}
-} */
+} 
