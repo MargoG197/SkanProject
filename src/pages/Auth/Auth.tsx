@@ -1,6 +1,7 @@
 import Footer from "../../components/Footer/Footer"
 import Header from "../../components/Header/Header"
 import AuthForm from "../../components/AuthForm/AuthForm"
+import Login_Reg_Form from "../../components/Login_Reg_Form/Login_Reg_Form"
 
 
 const AuthPage = () => {
@@ -8,14 +9,7 @@ const AuthPage = () => {
   return (
     <>
   <Header />
-      <div style={{
-        display: 'flex',
-        width: 'full',
-        justifyContent: 'justifyBetween'
-      }}>
-  <img src='../../icons/PeopleWithKey.svg' alt="CKAH Logo" style={{ width: '100px', height: 'auto' }} />
-  <AuthForm />
-  </div>
+  <Login_Reg_Form />
   <Footer />
     </>
   )

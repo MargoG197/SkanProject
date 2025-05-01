@@ -1,0 +1,39 @@
+.Login_Reg_Form_H1{
+	width: 50%;
+}
+.Login_Reg_Form_content{
+	align-items: flex-start;
+}
+
+.Login_Reg_Form_img{
+	position: absolute;
+	margin-top: 30px;
+	width: 30%;
+	height: auto
+}
+@media (max-width: 846px){
+	.Login_Reg_Form_H1{
+		width: 100%;
+		margin-bottom: 70px;
+	}
+	.Login_Reg_Form_content{
+		justify-content: center;
+		align-items: center;
+	}
+
+.Login_Reg_Form_img{
+	position:unset;
+	width: 40%;
+	 height: auto
+  }
+}
+
+@media (max-width: 610px){
+		
+		.Login_Reg_Form_img{
+		
+			bottom: 0;
+			width: 60%;
+			height: auto
+		}
+}

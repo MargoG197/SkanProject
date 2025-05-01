@@ -11,11 +11,11 @@ const Header = () => {
       style={{
         backgroundColor: "#ffffff",
         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
-				overflowX:"hidden"
+        overflowX: "hidden",
       }}
     >
       <div
-			className="headerInnerDiv"
+        className="headerInnerDiv"
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -31,7 +31,8 @@ const Header = () => {
           alt="CKAH Logo"
           style={{ width: "100px", height: "auto" }}
         />
-        <div className="navDiv"
+        <div
+          className="navDiv"
           style={{
             display: "flex",
             justifyContent: "space-between",
@@ -40,44 +41,44 @@ const Header = () => {
             height: "93px",
           }}
         >
-            <nav className="navigation">
-              <ul
-							className="navigationUL"
-                style={{
-                  display: "flex",
-                  listStyle: "none",
-									// gap:'30px',
-                  // gap: `${screenWidth >= 1035 ? "30px" : " 10px"}`,
-                  alignItems: "justify-between",
-                  boxSizing: "border-box",
-                  padding: "0",
-                }}
-              >
-                <li>
-                  <a href="/" style={{ textDecoration: "none", color: "#333" }}>
-                    Главная
-                  </a>
-                </li>
-                <li>
-                  <a href="/" style={{ textDecoration: "none", color: "#333" }}>
-                    Тарифы
-                  </a>
-                </li>
-                <li>
-                  <a href="/" style={{ textDecoration: "none", color: "#333" }}>
-                    FAQ
-                  </a>
-                </li>
-                {/* Блок для авторизованных пользователей */}
-              </ul>
-            </nav>
-     
-          {!isAuthenticated ? (
+          <nav className="navigation">
+            <ul
+              className="navigationUL"
+              style={{
+                display: "flex",
+                listStyle: "none",
+                // gap:'30px',
+                // gap: `${screenWidth >= 1035 ? "30px" : " 10px"}`,
+                alignItems: "justify-between",
+                boxSizing: "border-box",
+                padding: "0",
+              }}
+            >
+              <li>
+                <a href="/" style={{ textDecoration: "none", color: "#333" }}>
+                  Главная
+                </a>
+              </li>
+              <li>
+                <a href="/" style={{ textDecoration: "none", color: "#333" }}>
+                  Тарифы
+                </a>
+              </li>
+              <li>
+                <a href="/" style={{ textDecoration: "none", color: "#333" }}>
+                  FAQ
+                </a>
+              </li>
+              {/* Блок для авторизованных пользователей */}
+            </ul>
+          </nav>
+
+          {isAuthenticated ? (
             <>
               <LimitCard />
               {/* Имя пользователя и кнопка выхода */}
               <div
-							className="userNameSection"
+                className="userNameSection"
                 style={{
                   flexDirection: "column",
                   alignItems: "flex-end",
@@ -109,6 +110,7 @@ const Header = () => {
                 justifyContent: "space-between",
                 boxSizing: "border-box",
                 alignItems: "center",
+                cursor: "pointer",
               }}
             >
               <a
@@ -118,6 +120,7 @@ const Header = () => {
                   color: "#D9D1D2",
                   padding: "8px 0",
                   borderRadius: "4px",
+                  cursor: "pointer",
                 }}
               >
                 Зарегистрироваться
@@ -131,9 +134,7 @@ const Header = () => {
                   height: "26px",
                 }}
               ></div>
-
-              <a
-                href="/login"
+              <div
                 style={{
                   textDecoration: "none",
                   backgroundColor: "#7CE3E1",
@@ -147,13 +148,33 @@ const Header = () => {
                   alignItems: "center",
                   borderRadius: "4px",
                   boxSizing: "border-box",
+                  cursor: "pointer",
                 }}
               >
-                Войти
-              </a>
+                <a
+                  href="/login"
+                  style={{
+                    textDecoration: "none",
+                    backgroundColor: "#7CE3E1",
+                    fontSize: "14px",
+                    color: "black",
+                    fontWeight: "500",
+                    height: "26px",
+                    width: "65px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "4px",
+                    boxSizing: "border-box",
+                    cursor: "pointer",
+                  }}
+                >
+                  Войти
+                </a>
+              </div>
             </div>
           )}
-					<BurgerMenu />
+          <BurgerMenu />
         </div>
       </div>
     </header>

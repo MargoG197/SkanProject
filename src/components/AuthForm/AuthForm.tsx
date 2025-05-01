@@ -1,15 +1,20 @@
+import "./index.css"
+
 
 const AuthForm:React.FC = () => {
   return (
     <div style={{
-      maxWidth: '400px',
+      maxWidth: '429px',
+			height:"523px",
       margin: '0 auto',
       padding: '32px',
       backgroundColor: '#ffffff',
       borderRadius: '8px',
       boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-      fontFamily: 'Arial, sans-serif'
+			position:"relative",
     }}>
+			<img className="authForm_lock_img" 
+			 src='../../src/icons/AuthLock.svg' alt="AuthLock" />
       {/* Шапка формы */}
       <div style={{
         display: 'flex',
@@ -23,9 +28,10 @@ const AuthForm:React.FC = () => {
           background: 'none',
           fontSize: '16px',
           fontWeight: 'bold',
-          color: '#1890ff',
+          color: '#029491',
           cursor: 'pointer',
-          padding: '8px 16px'
+          padding: '8px 16px',
+					borderBottom: 'solid 1px #029491'
         }}>
           Войти
         </button>
@@ -35,22 +41,12 @@ const AuthForm:React.FC = () => {
           fontSize: '16px',
           color: '#999999',
           cursor: 'not-allowed',
-          padding: '8px 16px'
+          padding: '8px 16px',
+					borderBottom: 'solid 1px'
         }} disabled>
           Зарегистрироваться
         </button>
       </div>
-
-      {/* Секция с цифрами (2×92.06) */}
-      <div style={{
-        textAlign: 'center',
-        color: '#999999',
-        fontSize: '14px',
-        marginBottom: '24px'
-      }}>
-        2×92.06
-      </div>
-
       {/* Поля формы */}
       <div style={{ marginBottom: '24px' }}>
         <label style={{

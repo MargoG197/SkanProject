@@ -276,7 +276,7 @@ const BurgerMenu = () => {
         />
       </div>
 
-      {createPortal(
+      {isOpen && createPortal(
         <>
           <div
             className={`menu-overlay ${isOpen ? "open" : ""}`}
