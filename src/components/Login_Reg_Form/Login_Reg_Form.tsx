@@ -4,13 +4,13 @@ import "./index.css"
 const Login_Reg_Form = () =>{
 
 	return(
-		<div 
+		<div className="Login_Reg_Form_main_div"
 		style={{
 			display: 'flex',
 			width: '100%',
 			alignItems:'center',
 			justifyContent:"center",
-			margin: "80px 0"
+			// margin: "80px 0"
 		}}
 		>
 			<div  className="Login_Reg_Form_content"

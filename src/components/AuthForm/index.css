@@ -6,13 +6,23 @@
 		height: auto;
 }
 
+.authForm_container{
+	width: 429px;
+height: 523px;
+}
+
 
 @media (max-width: 450px){
 
 	.authForm_lock_img{
 		top:-60px;
 		left: 50px;
-
 }
+
+.authForm_container{
+	width: 90%;
+height: 523px;
+}
+
 
 }

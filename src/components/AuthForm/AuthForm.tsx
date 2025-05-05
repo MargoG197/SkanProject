@@ -1,151 +1,251 @@
-import "./index.css"
+import { useRef, useState } from "react";
+import "./index.css";
+
+const AuthForm: React.FC = () => {
+
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Состояние для отображения пароля
+  const isFormValid = login.trim() !== '' && password.trim() !== '';
+  const holdTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Обработчики для кнопки показа пароля
+  const handleMouseDown = () => {
+    holdTimerRef.current = setTimeout(() => {
+      setShowPassword(true);
+    }, 300); // Задержка перед показом пароля
+  };
+
+  const handleMouseUp = () => {
+    clearTimeout(holdTimerRef.current as NodeJS.Timeout);
+    setShowPassword(false);
+  };
 
 
-const AuthForm:React.FC = () => {
   return (
-    <div style={{
-      maxWidth: '429px',
-			height:"523px",
-      margin: '0 auto',
-      padding: '32px',
-      backgroundColor: '#ffffff',
-      borderRadius: '8px',
-      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-			position:"relative",
-    }}>
-			<img className="authForm_lock_img" 
-			 src='../../src/icons/AuthLock.svg' alt="AuthLock" />
+    <div
+      className="authForm_container"
+      style={{
+        margin: "0 auto",
+        borderRadius: "8px",
+        boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+        position: "relative",
+        padding: "25px 25px 39px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+      }}
+    >
+      <img
+        className="authForm_lock_img" 
+        src="../../src/icons/AuthLock.svg"
+        alt="AuthLock"
+      />
       {/* Шапка формы */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginBottom: '24px',
-        borderBottom: '1px solid #f0f0f0',
-        paddingBottom: '16px'
-      }}>
-        <button style={{
-          border: 'none',
-          background: 'none',
-          fontSize: '16px',
-          fontWeight: 'bold',
-          color: '#029491',
-          cursor: 'pointer',
-          padding: '8px 16px',
-					borderBottom: 'solid 1px #029491'
-        }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          height: "26px",
+          width: "100%",
+        }}
+      >
+        <button
+          style={{
+            border: "none",
+            background: "none",
+            backgroundColor:'none',
+            fontSize: "16px",
+            fontWeight: "bold",
+            color: "#029491",
+            cursor: "pointer",
+            borderBottom: "solid 1px #029491",
+            width: '44%',
+            // minWidth: "151px",
+            boxSizing: "border-box",
+            height: "29px",
+          }}
+        >
           Войти
         </button>
-        <button style={{
-          border: 'none',
-          background: 'none',
-          fontSize: '16px',
-          color: '#999999',
-          cursor: 'not-allowed',
-          padding: '8px 16px',
-					borderBottom: 'solid 1px'
-        }} disabled>
+        <button
+          style={{
+            border: "none",
+            backgroundColor:'none',
+            background: "none",
+            fontSize: "16px",
+            color: "#999999",
+            cursor: "not-allowed",
+            borderBottom: "solid 1px",
+            width: '54%',
+            // width: "213px",
+            // minWidth: "213px",
+            boxSizing: "border-box",
+            height: "29px",
+            
+          }}
+          disabled
+        >
           Зарегистрироваться
         </button>
       </div>
       {/* Поля формы */}
-      <div style={{ marginBottom: '24px' }}>
-        <label style={{
-          display: 'block',
-          marginBottom: '8px',
-          fontSize: '14px',
-          color: '#666666'
-        }}>
-          Логин или номер телефона:
-        </label>
-        <input
-          type="text"
-          style={{
-            width: '100%',
-            padding: '12px',
-            border: '1px solid #d9d9d9',
-            borderRadius: '4px',
-            fontSize: '16px'
-          }}
-        />
-      </div>
+      <form style={{ width: "90%" }}>
+        <div style={{ marginBottom: "24px", width: "90%" }}>
+          <label
+            style={{
+              display: "block",
+              marginBottom: "8px",
+              fontSize: "14px",
+              color: "#949494",
+            }}
+          >
+            Логин или номер телефона:
+          </label>
+          <input
+            type="text"
+            value={login}
+            onChange={(e) => setLogin(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "12px",
+              border: "1px solid #d9d9d9",
+              borderRadius: "4px",
+              fontSize: "16px",
+            }}
+            required
+          />
+        </div>
 
-      <div style={{ marginBottom: '24px' }}>
-        <label style={{
-          display: 'block',
-          marginBottom: '8px',
-          fontSize: '14px',
-          color: '#666666'
-        }}>
-          Пароль:
-        </label>
-        <input
-          type="password"
+        <div style={{ marginBottom: "24px", width: "90%" }}>
+          <label
+            style={{
+              display: "block",
+              marginBottom: "8px",
+              fontSize: "14px",
+              color: "#949494",
+            }}
+          >
+            Пароль:
+          </label>
+          <input
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "12px",
+              border: "1px solid #d9d9d9",
+              borderRadius: "4px",
+              fontSize: "16px",
+            }}
+            required
+          />
+           <button
+            type="button"
+            onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp} // На случай, если курсор ушел с кнопки
+          onTouchStart={handleMouseDown}
+          onTouchEnd={handleMouseUp}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              color: '#6b7280',
+              fontSize: '14px'}}
+        >
+          {showPassword ? 'Скрыть' : 'Показать пароль'}
+        </button>
+        </div>
+        {/* Кнопка входа */}
+        <button
+          type="submit"
           style={{
-            width: '100%',
-            padding: '12px',
-            border: '1px solid #d9d9d9',
-            borderRadius: '4px',
-            fontSize: '16px'
+            width: "100%",
+            padding: "12px",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            fontSize: "16px",
+            fontWeight: "bold",
+            marginBottom: "16px",
+            cursor: isFormValid ? 'pointer' : 'not-allowed',
+            backgroundColor: isFormValid ? '#029491' : '#88d7d5',
+            transition: 'background-color 0.3s ease, transform 0.1s ease',
           }}
-        />
-      </div>
-
-      {/* Кнопка входа */}
-      <button
-        style={{
-          width: '100%',
-          padding: '12px',
-          backgroundColor: '#1890ff',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          fontSize: '16px',
-          fontWeight: 'bold',
-          cursor: 'pointer',
-          marginBottom: '16px'
-        }}
-      >
-        Войти
-      </button>
+          disabled={!isFormValid}
+        >
+          Войти
+        </button>
+      </form>
 
       {/* Ссылка восстановления пароля */}
-      <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-        <a href="#" style={{
-          color: '#1890ff',
-          textDecoration: 'none',
-          fontSize: '14px'
-        }}>
+      <div
+        style={{
+          textAlign: "center",
+          marginBottom: "24px",
+          alignSelf: "center",
+          borderBottom: "solid #5970FF 1px",
+        }}
+      >
+        <a
+          href="#"
+          style={{
+            color: "#5970FF",
+            textDecoration: "none",
+            fontSize: "14px",
+            height: "59px",
+          }}
+        >
           Восстановить пароль
         </a>
       </div>
 
       {/* Раздел "Войти через" */}
-      <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-        <span style={{
-          color: '#999999',
-          fontSize: '14px',
-          position: 'relative',
-          display: 'inline-block',
-          padding: '0 10px',
-          backgroundColor: '#fff'
-        }}>
+      <div style={{ textAlign: "center", marginBottom: "16px" }}>
+        <span
+          style={{
+            color: "#999999",
+            fontSize: "14px",
+            position: "relative",
+            display: "inline-block",
+            padding: "0 10px",
+            backgroundColor: "#fff",
+          }}
+        >
           Войти через:
         </span>
-        <div style={{
-          borderTop: '1px solid #f0f0f0',
-          marginTop: '-8px',
-          zIndex: '-1'
-        }}></div>
+        <div
+          style={{
+            borderTop: "1px solid #f0f0f0",
+            marginTop: "-8px",
+            zIndex: "-1",
+          }}
+        ></div>
       </div>
 
       {/* Кнопки соцсетей (неактивные) */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '16px',
-        marginBottom: '16px'
-      }}>
-        {['Google', 'Facebook', 'Яндекс'].map((service) => (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "16px",
+          marginBottom: "16px",
+        }}
+      >
+        <a href="">
+          <img src="../../../src/icons/google.svg" />
+        </a>
+        <a href="">
+          <img src="../../../src/icons/facebook.svg" />
+        </a>
+        <a href="">
+          <img src="../../../src/icons/yandex.svg" />
+        </a>
+
+        {/* {['Google', 'Facebook', 'Яндекс'].map((service) => (
           <button
             key={service}
             style={{
@@ -163,7 +263,7 @@ const AuthForm:React.FC = () => {
           >
             {service}
           </button>
-        ))}
+        ))} */}
       </div>
     </div>
   );
