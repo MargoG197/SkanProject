@@ -5,7 +5,9 @@ import { TToken, TAuth } from '../api/loginApi';
 type TAuthContext = {
   isAuthenticated: boolean
   login: (data:TAuth) => Promise<void|TToken>
-  logout:()=>void
+  logout: () => void
+  token: string|null
+  tokenExpirationTime:string|null
 }
 
 async function getLogin(data:TAuth) {
@@ -17,42 +19,48 @@ async function getLogin(data:TAuth) {
 }
 
 
-// if (localStorage.getItem('expirationToken')) {
-//   const now = new Date();
-//   const expirationTime = new Date(localStorage.getItem('expirationToken') as string )
-// }
-
-
 const defaultAuthcontext:TAuthContext = {
   isAuthenticated: localStorage.getItem('token') && localStorage.getItem('expirationToken') ? true : false,
   login: getLogin,
-  logout:()=>{}
+  logout: () => { },
+  token: null,
+  tokenExpirationTime:null
 };
 
 
 const AuthContext = createContext<TAuthContext>(defaultAuthcontext);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
 const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
+const [token, setToken] = useState<string | null>(localStorage.getItem('token') ? localStorage.getItem('token') as string : null);
+const [tokenExpirationTime , setTokenExpirationTime ] = useState<string|null>(localStorage.getItem('expirationToken') ? localStorage.getItem('expirationToken') as string : null)
+
 async function getLogin(data:TAuth) {
   try {
     const response = await loginAxios(data);
     if (response) {
       setIsAuthenticated(true);
+      setToken(response.accessToken);
+      setTokenExpirationTime(response.expire);
       localStorage.setItem('token', `${response.accessToken}`)
       localStorage.setItem('expirationToken', `${response.expire}`)
 }
   } catch (err) {
     console.log(err)
-  }
-
+    }
 }
+  
+  const logoutFunc = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('tokenExpiration');
+    setToken(null);
+    setTokenExpirationTime(null)
+  };
 
   const login = useCallback((data:TAuth) => getLogin(data), []);
-  const logout = useCallback(() => setIsAuthenticated(false), []);
+  const logout = useCallback(() => logoutFunc(), []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, token, tokenExpirationTime }}>
       {children}
     </AuthContext.Provider>
   );

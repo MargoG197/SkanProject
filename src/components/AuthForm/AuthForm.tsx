@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import "./index.css";
-// import { useLoginAPIMutation } from "../../services/loginService";
 import { useAuth } from "../../context/AuthContext";
 import { TAuth } from "../../api/loginApi";
 
@@ -11,7 +10,7 @@ const AuthForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false); // Состояние для отображения пароля
   const isFormValid = login.trim() !== '' && password.trim() !== '';
   const holdTimerRef = useRef<NodeJS.Timeout | null>(null);
-  // const [loginApi, { }] = useLoginAPIMutation();
+
 
 
  const { isAuthenticated, login:loginFunc } = useAuth(); // Получаем данные из контекста
@@ -28,29 +27,7 @@ console.log(isAuthenticated)
     setShowPassword(false);
   };
 
-  
-// type TAuth = {
-//   login: string,
-//   password: string
-//   }
-//   async function onSubmitFunc() {
-//     const obj:TAuth = {
-//       login: login.trim(),
-//       password: password.trim()
-//     }
-// console.log(obj)
-//     if (login.length > 0 && password.length > 0) {
-//       try {
 
-//        const response =  await loginApi(obj).unwrap();
-//         console.log(response, 'login response');
-
-
-//       } catch (err) {
-//         console.log(err, 'error')
-//       }
-//     }
-// }
 
   async function onSubmitFunc() { 
     const obj:TAuth = {
