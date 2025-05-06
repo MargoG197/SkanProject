@@ -7,18 +7,23 @@ import { AuthProvider } from "./context/AuthContext";
 import AuthPage from "./pages/Auth/Auth";
 import SearchPage from "./pages/Search/Search";
 import routerConfig from "./routerConfig";
+import { Provider } from 'react-redux';
+import { setupStore } from './store/store.ts';
 
+const store = setupStore();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AuthProvider>
-      <Router>
+      <Provider store={store}>
+        <Router>
         <Routes>
           <Route path={routerConfig[0].path} element={<Main />} />
           <Route path={routerConfig[1].path} element={<SearchPage />} />
           <Route path={routerConfig[2].path} element={<AuthPage />} />
         </Routes>
       </Router>
+      </Provider>
     </AuthProvider>
   </StrictMode>
 );

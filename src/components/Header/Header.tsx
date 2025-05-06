@@ -5,7 +5,7 @@ import "./index.css";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
 const Header = () => {
-  const { isAuthenticated, login, logout } = useAuth(); // Получаем данные из контекста
+  const { isAuthenticated, logout } = useAuth(); // Получаем данные из контекста
   return (
     <header
       style={{

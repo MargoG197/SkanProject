@@ -6,8 +6,12 @@
 		height: auto;
 }
 
+.AuthForm_submitButton:hover:not(:disabled) {
+	background-color: #086260 !important;
+}
+
 .authForm_container{
-	width: 429px;
+width: 429px;
 height: 523px;
 }
 
