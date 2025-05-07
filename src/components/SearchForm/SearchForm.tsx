@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
-import { validateINN } from './helperFunctions';
+import { validateINN, validateDates } from './helperFunctions';
 import "./index.css"
 
 const SearchForm = () => {
 
-const [innError, setInnError] = useState<null|string>(null)
+  const [innError, setInnError] = useState<null | string>(null)
+  const [startDateError, setStartDateError] = useState<null | string>(null);
+  const [endDateError, setEndDateError] = useState<null | string>(null)
   const [disabled, setDisabled] = useState(true);
 
   const [formData, setFormData] = useState({
@@ -25,7 +27,7 @@ const [innError, setInnError] = useState<null|string>(null)
   });
 
   useEffect(() => {
-    if (validateINN(formData.inn).isValid && formData.documentsCount && formData.endDate && formData.startDate) {
+    if (validateINN(formData.inn).isValid && formData.documentsCount && formData.endDate && formData.startDate && startDateError==null && endDateError==null) {
       setDisabled(false)
     } else {
       setDisabled(true)
@@ -68,6 +70,28 @@ const [innError, setInnError] = useState<null|string>(null)
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData);
+  };
+
+  const handleBlur = () => {
+    if (formData.startDate, formData.endDate) {
+      //       errors
+      // : 
+      // {startDate: 'Дата начала не может быть в будущем', endDate: 'Дата окончания не может быть в будущем', dateRange: ''}
+      // isValid
+      // : 
+      // false
+      const result = validateDates(formData.startDate, formData.endDate);
+      console.log(result)
+      if (result.isValid == false) {
+        result.errors.startDate && setStartDateError(result.errors.startDate);
+        result.errors.endDate && setEndDateError(result.errors.endDate);
+        result.errors.dateRange && setStartDateError(result.errors.dateRange);
+      } else {
+        setStartDateError(null);
+        setEndDateError(null)
+      }
+    }
+      
   };
 
   return (
@@ -179,7 +203,8 @@ const [innError, setInnError] = useState<null|string>(null)
         <div  className='searchForm_dates' style={{ display: 'flex', width:'100%',  }}>
           <div>
               <input
-                className='searchForm_dateInput'
+              className='searchForm_dateInput'
+              onBlur={handleBlur}
               type="date"
               placeholder='Дата начала'
               name="startDate"
@@ -192,11 +217,13 @@ const [innError, setInnError] = useState<null|string>(null)
                 outline: 'none',
                 height: '43px',
               }}
-            />
+              />
+               {startDateError && <p style={{ color:'red', padding:'0', margin:'0', fontSize:'12px', maxWidth:'214px'}}>{startDateError}</p>}
             </div>
             <div>
               <input
-                className='searchForm_dateInput'
+              onBlur={handleBlur}
+              className='searchForm_dateInput'
               type="date"
               name="endDate"
               placeholder='Дата конца'
@@ -208,8 +235,9 @@ const [innError, setInnError] = useState<null|string>(null)
                 borderRadius: '4px',
                 outline: 'none',
                 height: '43px',
-              }}
-            />
+                }}
+              />
+              {endDateError && <p style={{ color:'red', padding:'0', margin:'0', fontSize:'12px'}}>{endDateError}</p>}
           </div>
           </div>
         </div>

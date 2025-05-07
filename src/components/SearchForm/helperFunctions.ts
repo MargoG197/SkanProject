@@ -70,4 +70,81 @@ const validateINN = (inn: string): { isValid: boolean; error?: string } => {
   return { isValid: true };
 };
 
-export {validateINN }
+
+interface DateValidationResult {
+  isValid: boolean;
+  errors: {
+    startDate: string;
+    endDate: string;
+    dateRange: string;
+  };
+}
+
+const validateDates = (startDate: string, endDate: string): DateValidationResult => {
+  const result: DateValidationResult = {
+    isValid: true,
+    errors: {
+      startDate: '',
+      endDate: '',
+      dateRange: ''
+    }
+  };
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Сбрасываем время для сравнения только дат
+
+  // Проверка даты начала
+  if (!startDate) {
+    result.errors.startDate = 'Укажите дату начала';
+    result.isValid = false;
+  } else {
+    const start = new Date(startDate);
+    if (start > today) {
+      result.errors.startDate = 'Дата начала не может быть в будущем';
+      result.isValid = false;
+    }
+  }
+
+  // Проверка даты окончания
+  if (!endDate) {
+    result.errors.endDate = 'Укажите дату окончания';
+    result.isValid = false;
+  } else {
+    const end = new Date(endDate);
+    if (end > today) {
+      result.errors.endDate = 'Дата окончания не может быть в будущем';
+      result.isValid = false;
+    }
+  }
+
+  // Проверка корректности диапазона (только если обе даты валидны)
+  if (result.errors.startDate === '' && result.errors.endDate === '') {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (start > end) {
+      result.errors.dateRange = 'Дата начала должна быть раньше или равна дате окончания';
+      result.isValid = false;
+    }
+  }
+
+  return result;
+};
+
+// Вспомогательная функция для проверки одной даты
+// const validateSingleDate = (date: string, fieldName: string): { isValid: boolean; error: string } => {
+//   if (!date) {
+//     return { isValid: false, error: `Укажите ${fieldName}` };
+//   }
+
+//   const today = new Date();
+//   today.setHours(0, 0, 0, 0);
+//   const inputDate = new Date(date);
+
+//   if (inputDate > today) {
+//     return { isValid: false, error: `${fieldName} не может быть в будущем` };
+//   }
+
+//   return { isValid: true, error: '' };
+// };
+export {validateINN, validateDates }
