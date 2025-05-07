@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import "./index.css";
 import { useAuth } from "../../context/AuthContext";
-import { TAuth } from "../../api/loginApi";
+
 
 const AuthForm: React.FC = () => {
 
@@ -11,10 +11,8 @@ const AuthForm: React.FC = () => {
   const isFormValid = login.trim() !== '' && password.trim() !== '';
   const holdTimerRef = useRef<NodeJS.Timeout | null>(null);
 
+  const {login:loginFunc} = useAuth(); // Получаем данные из контекста
 
-
- const { isAuthenticated, login:loginFunc } = useAuth(); // Получаем данные из контекста
-console.log(isAuthenticated)
   // Обработчики для кнопки показа пароля
   const handleMouseDown = () => {
     holdTimerRef.current = setTimeout(() => {
@@ -27,21 +25,30 @@ console.log(isAuthenticated)
     setShowPassword(false);
   };
 
-
-
-  async function onSubmitFunc() { 
-    const obj:TAuth = {
-       login: login.trim(),
-       password: password.trim()
-    }
-    
-    try {
-      const response = loginFunc(obj)
-      console.log(response, "Authform login response")
-    } catch (err) {
-      console.log(err, 'Authform login error')
-    }
+  
+type TAuth = {
+  login: string,
+  password: string
   }
+
+  
+  async function submitFunc() {
+    const obj:TAuth = {
+      login: login.trim(),
+      password: password.trim()
+    }
+console.log(obj, "object")
+    if (login.length > 0 && password.length > 0) {
+      try {
+       const response =  await loginFunc(obj);
+        console.log(response, 'login response');
+      } catch (err) {
+        console.log(err, 'error')
+      }
+    }
+}
+
+
 
   return (
     <div
@@ -91,7 +98,6 @@ console.log(isAuthenticated)
           Войти
         </button>
         <button
-          
           style={{
             border: "none",
             backgroundColor:'none',
@@ -111,7 +117,6 @@ console.log(isAuthenticated)
         </button>
       </div>
       {/* Поля формы */}
-      <form style={{ width: "90%" }} onSubmit={onSubmitFunc}>
         <div style={{ marginBottom: "24px", width: "90%" }}>
           <label
             style={{
@@ -163,9 +168,8 @@ console.log(isAuthenticated)
             required
           />
           <button
-         
-            type="button"
-            onMouseDown={handleMouseDown}
+          type="button"
+          onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp} // На случай, если курсор ушел с кнопки
           onTouchStart={handleMouseDown}
@@ -183,7 +187,7 @@ console.log(isAuthenticated)
         {/* Кнопка входа */}
         <button
           className="AuthForm_submitButton"
-          type="submit"
+          // type="submit"
           style={{
             width: "100%",
             padding: "12px",
@@ -198,11 +202,11 @@ console.log(isAuthenticated)
             transition: 'background-color 0.3s ease, transform 0.1s ease',
           }}
           disabled={!isFormValid}
+          onClick={() => { submitFunc();  console.log('clicked', login, password)} }
         >
+          
           Войти
         </button>
-      </form>
-
       {/* Ссылка восстановления пароля */}
       <div
         style={{
@@ -266,26 +270,6 @@ console.log(isAuthenticated)
         <a href="">
           <img src="../../../src/icons/yandex.svg" />
         </a>
-
-        {/* {['Google', 'Facebook', 'Яндекс'].map((service) => (
-          <button
-            key={service}
-            style={{
-              padding: '8px 16px',
-              border: '1px solid #d9d9d9',
-              borderRadius: '4px',
-              backgroundColor: '#fafafa',
-              color: '#999999',
-              cursor: 'not-allowed',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}
-            disabled
-          >
-            {service}
-          </button>
-        ))} */}
       </div>
     </div>
   );

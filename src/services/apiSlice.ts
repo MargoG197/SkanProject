@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-// const API_URL = import.meta.env.BASE_URL as string;
 const API_URL = "https://gateway.scan-interfax.ru/"
 
 export const apiSlice = createApi({

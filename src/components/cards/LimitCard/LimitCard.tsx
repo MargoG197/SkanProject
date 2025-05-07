@@ -1,4 +1,32 @@
+import { useEffect, useState } from "react";
+import { TAccInfo } from "../../../types/types";
+import { useLazyRequestAccInfoQuery } from "../../../services/loginService";
+import { useAuth } from "../../../context/AuthContext";
+import "./index.css"
+
 const LimitCard = () => {
+    const { token } = useAuth(); // Получаем данные из контекста
+    const [userData, setUserData] = useState<TAccInfo | null>(null);
+    const [requestUserInfo, {isLoading }] = useLazyRequestAccInfoQuery();
+
+  
+  useEffect(() => {
+    if (token) {
+      requestUserInfoFunc()
+    }
+  },[token])
+
+  async function requestUserInfoFunc(){
+    if (token) {
+   try {
+     const result = await requestUserInfo(token).unwrap();
+     setUserData(result)
+    } catch (err) {
+      console.log(err)
+    }
+    }
+  }
+  
   return (
     <div
       style={{
@@ -11,12 +39,12 @@ const LimitCard = () => {
         display: "flex",
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems:'flex-end',
+        alignItems:'center',
         backgroundColor: "#D9D9D9",
         boxSizing: "border-box",
       }}
     >
-      <div
+      {isLoading ? <div className="loader"></div> : <div
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -38,7 +66,8 @@ const LimitCard = () => {
             }}
           >
             Использовано компаний <b style={{
-              fontSize: "14px", color:'black'}}>34</b>
+              fontSize: "14px", color: 'black'
+            }}>{userData && userData.eventFiltersInfo.usedCompanyCount}</b>
           </p>
           <p
             style={{
@@ -49,10 +78,13 @@ const LimitCard = () => {
           >
             Лимит по компаниям <b style={{
               fontSize: "14px", fontWeight:'700',
-              color: "#8AC540",}}>340</b>
+              color: "#8AC540",
+            }}>{userData && userData.eventFiltersInfo.companyLimit }</b>
           </p>
         </div>
       </div>
+    }
+      
     
     </div>
   );

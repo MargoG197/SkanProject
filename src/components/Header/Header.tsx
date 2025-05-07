@@ -1,11 +1,24 @@
-// import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import LimitCard from "../cards/LimitCard/LimitCard";
 import "./index.css";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
+// import {  useState } from "react";
+// import { TAccInfo } from "../../types/types";
+// import { useLazyRequestAccInfoQuery } from "../../services/loginService";
+
 
 const Header = () => {
   const { isAuthenticated, logout } = useAuth(); // Получаем данные из контекста
+  // const [userData, setUserData] = useState<TAccInfo | null>(null);
+  // const [requestUserInfo, {isLoading }] = useLazyRequestAccInfoQuery();
+
+  // // if (token && tokenExpirationTime) {
+  // //   const now = new Date();
+  // //   const expirTime = new Date(tokenExpirationTime)
+  
+  // // }
+
+
   return (
     <header
       style={{
@@ -46,8 +59,6 @@ const Header = () => {
               style={{
                 display: "flex",
                 listStyle: "none",
-                // gap:'30px',
-                // gap: `${screenWidth >= 1035 ? "30px" : " 10px"}`,
                 alignItems: "justify-between",
                 boxSizing: "border-box",
                 padding: "0",
@@ -74,7 +85,10 @@ const Header = () => {
 
           {isAuthenticated ? (
             <>
-              <LimitCard />
+              {/* {userData && */}
+                <LimitCard />
+
+              {/* } */}
               {/* Имя пользователя и кнопка выхода */}
               <div
                 className="userNameSection"

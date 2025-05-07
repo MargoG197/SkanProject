@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useCallback } from 'react';
+import React, { createContext, useState, useContext, useCallback, useEffect } from 'react';
 import { loginAxios } from '../api/loginApi';
 import { TToken, TAuth } from '../api/loginApi';
 
@@ -36,14 +36,14 @@ const [tokenExpirationTime , setTokenExpirationTime ] = useState<string|null>(lo
 
 async function getLogin(data:TAuth) {
   try {
-    const response = await loginAxios(data);
-    if (response) {
+    const result = await loginAxios(data);
       setIsAuthenticated(true);
-      setToken(response.accessToken);
-      setTokenExpirationTime(response.expire);
-      localStorage.setItem('token', `${response.accessToken}`)
-      localStorage.setItem('expirationToken', `${response.expire}`)
-}
+      setToken(result.accessToken);
+      setTokenExpirationTime(result.expire);
+      localStorage.setItem('token', `${result.accessToken}`)
+      localStorage.setItem('expirationToken', `${result.expire}`)
+      console.log(result)
+
   } catch (err) {
     console.log(err)
     }
@@ -55,6 +55,31 @@ async function getLogin(data:TAuth) {
     setToken(null);
     setTokenExpirationTime(null)
   };
+
+  useEffect(() => {
+    if (token && tokenExpirationTime) {
+    const now = new Date();
+    const exp = new Date(tokenExpirationTime)
+    if (((+exp - +now)/ (1000 * 60)) > 10) {
+      setIsAuthenticated(true)
+    } else {
+      setIsAuthenticated(false)
+    }
+  }
+  }, [])
+ 
+  setInterval(() => {
+    if (token && tokenExpirationTime) {
+      const now = new Date();
+      const exp = new Date(tokenExpirationTime)
+      if (((+exp - +now)/ (1000 * 60)) > 10) {
+        setIsAuthenticated(true)
+      } else {
+        setIsAuthenticated(false)
+      }
+    }
+  }, 60000)
+
 
   const login = useCallback((data:TAuth) => getLogin(data), []);
   const logout = useCallback(() => logoutFunc(), []);

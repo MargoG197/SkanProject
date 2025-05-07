@@ -16,7 +16,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AuthProvider>
       <Provider store={store}>
-        <Router>
+        <Router future={{ v7_startTransition: true }}>
         <Routes>
           <Route path={routerConfig[0].path} element={<Main />} />
           <Route path={routerConfig[1].path} element={<SearchPage />} />

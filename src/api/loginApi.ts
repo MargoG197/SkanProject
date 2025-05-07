@@ -18,8 +18,8 @@ type TAuth = {
 
 
 export const loginAxios = async (
-  data: TAuth,
-): Promise<TToken|undefined> => {
+  data: TAuth
+): Promise<TToken|any> => {
   try {
   const response: AxiosResponse<TToken> = await axios({
       url: loginEndpoint,
@@ -30,9 +30,7 @@ export const loginAxios = async (
       },
       data: JSON.stringify(data),
     });
-    if (response) {
-      return response
-    }
+  return response.data
   } catch (err:any) {
     console.error('Post login request has failed', err);
     throw new Error(err);
