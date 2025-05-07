@@ -74,24 +74,16 @@ const SearchForm = () => {
 
   const handleBlur = () => {
     if (formData.startDate, formData.endDate) {
-      //       errors
-      // : 
-      // {startDate: 'Дата начала не может быть в будущем', endDate: 'Дата окончания не может быть в будущем', dateRange: ''}
-      // isValid
-      // : 
-      // false
       const result = validateDates(formData.startDate, formData.endDate);
       console.log(result)
       if (result.isValid == false) {
-        result.errors.startDate && setStartDateError(result.errors.startDate);
-        result.errors.endDate && setEndDateError(result.errors.endDate);
-        result.errors.dateRange && setStartDateError(result.errors.dateRange);
+        result.errors.startDate ? setStartDateError(result.errors.startDate) : result.errors.dateRange ?setStartDateError(result.errors.dateRange) : setStartDateError(null)
+        result.errors.endDate ? setEndDateError(result.errors.endDate) : setEndDateError(null);
       } else {
         setStartDateError(null);
         setEndDateError(null)
       }
     }
-      
   };
 
   return (
@@ -126,19 +118,11 @@ const SearchForm = () => {
             height:'43px',
             padding: '3px 10px',
             boxSizing:'border-box',
-            border: '1px solid #d1d5db',
-            borderRadius: '0.375rem',
-            outline: 'none',
+            border: innError ? '1px solid red' :'1px solid #d1d5db',
+            borderRadius: '8px',
+            outline: innError ? '1px solid red' :'1px solid #d1d5db',
             boxShadow: '0 0 0 2px rgba(59, 130, 246, 0)',
             transition: 'box-shadow 0.2s, border-color 0.2s'
-          }}
-          onFocus={(e) => {
-            e.target.style.borderColor = '#3b82f6';
-            e.target.style.boxShadow = '0 0 0 2px rgba(59, 130, 246, 0.5)';
-          }}
-          onBlur={(e) => {
-            e.target.style.borderColor = '#d1d5db';
-            e.target.style.boxShadow = '0 0 0 2px rgba(59, 130, 246, 0)';
           }}
           />
           {innError && <p style={{ color:'red', padding:'0', margin:'0', fontSize:'12px' }}>{innError}</p>}
@@ -212,7 +196,7 @@ const SearchForm = () => {
               onChange={handleChange}
               required
               style={{
-                border: '1px solid #d1d5db',
+                border: startDateError ? "1px solid red" : '1px solid #d1d5db',
                 borderRadius: '4px',
                 outline: 'none',
                 height: '43px',
@@ -229,12 +213,12 @@ const SearchForm = () => {
               placeholder='Дата конца'
               value={formData.endDate}
               onChange={handleChange}
-              required
+                required
               style={{
-                border: '1px solid #d1d5db',
                 borderRadius: '4px',
                 outline: 'none',
                 height: '43px',
+                border: endDateError ? "1px solid red" : '1px solid #d1d5db'
                 }}
               />
               {endDateError && <p style={{ color:'red', padding:'0', margin:'0', fontSize:'12px'}}>{endDateError}</p>}

@@ -131,20 +131,5 @@ const validateDates = (startDate: string, endDate: string): DateValidationResult
   return result;
 };
 
-// Вспомогательная функция для проверки одной даты
-// const validateSingleDate = (date: string, fieldName: string): { isValid: boolean; error: string } => {
-//   if (!date) {
-//     return { isValid: false, error: `Укажите ${fieldName}` };
-//   }
 
-//   const today = new Date();
-//   today.setHours(0, 0, 0, 0);
-//   const inputDate = new Date(date);
-
-//   if (inputDate > today) {
-//     return { isValid: false, error: `${fieldName} не может быть в будущем` };
-//   }
-
-//   return { isValid: true, error: '' };
-// };
 export {validateINN, validateDates }
