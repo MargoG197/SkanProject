@@ -2,12 +2,15 @@
 .button{
   width: '355px',
 }
-.button:hover {
+.button:hover:not(:disabled){
   transform: scale(1.02);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: all 1s ease-in-out ;
+  cursor: pointer;
 }
-
+.button:disabled{
+  opacity: 50%;
+}
 
 @media (max-width: 400px) {
   .button{

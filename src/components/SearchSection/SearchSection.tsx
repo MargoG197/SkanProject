@@ -1,5 +1,5 @@
 import SearchForm from "../SearchForm/SearchForm";
-
+import "./index.css"
 
 const SearchSection = () => {
   
@@ -27,33 +27,33 @@ const SearchSection = () => {
           display: 'flex',
           height: '214px',
           width: '100%',
-           marginBottom:'47px'
+          marginBottom:'47px'
         }}>
-          <div style={{
+          <div
+          className="searchTitle_textBlock"
+            style={{
             display: 'flex',
             flexDirection: 'column',
-            width:'50%',
         }}>
-            <h1 style={{fontSize:'40px', fontWeight: '900', textTransform:'uppercase' }}> Найдите необходимые данные в пару кликов.</h1>
-          <p style={{fontSize:'20px'}}>Задайте параметры поиска. <br />Чем больше заполните, тем точнее поиск</p>
+          <h1 className="searchTitle_textBlock_h1" style={{ fontWeight: '900', textTransform:'uppercase' }}> Найдите необходимые данные в пару кликов.</h1>
+          <p className="searchTitle_textBlock_p" >Задайте параметры поиска. <br />Чем больше заполните, тем точнее поиск</p>
           </div>
           <div
+            className="searchTitle_imgBlock"
             style={{
               display: 'flex',
               justifyContent: 'space-around',
               alignItems: 'center',
-              width:'50%',
-            }}
-          >
+            }}>
             <img src="../../../src/icons/Document.svg" style={{width:'91px', height:'auto'}}/>
-            <img src="../../../src/icons/Folders.svg" style={{width:'140px', height:'auto'}} /> 
-          </div>
-      </div>
+            <img className="searchTitle_folderImg" src="../../../src/icons/Folders.svg" style={{width:'140px', height:'auto'}} /> 
+            </div>
+        </div>
         <div className="searchArea" style={{ width: '100%', display: 'flex', alignItems:'center', justifyContent:'space-between' }}>
-         <div style={{width:'50%'}}>
+         <div className="searchArea_searchForm" >
         <SearchForm />
           </div>
-        <img src="../../../src/icons/SearchPic.svg" style={{width:'40%', height:'auto'}}/>
+        <img src="../../../src/icons/SearchPic.svg" className="searchArea_img"/>
         </div>
         
    </div>

@@ -8,14 +8,16 @@ type TButtonProps = {
   bg: string
   textColor: string
   maxWidth?: number
+  disabled?:boolean
 }
 
 
-const Button:React.FC<TButtonProps> = ({onClickFunc, btnText, bg, textColor, maxWidth= 355}) => {
+const Button:React.FC<TButtonProps> = ({onClickFunc, btnText, bg, textColor, maxWidth= 355, disabled=false}) => {
   
   return (
     <>
       <button
+      disabled={disabled}
       className='button'
       onClick={onClickFunc}
       style={{
@@ -29,9 +31,8 @@ const Button:React.FC<TButtonProps> = ({onClickFunc, btnText, bg, textColor, max
       borderRadius: '6px',
       fontSize: '16px',
       fontWeight: '500',
-      cursor: 'pointer',
       transition: 'background-color 0.3s',
-        }}>{btnText}</button>
+      }}>{btnText}</button>
     </>
     
   )

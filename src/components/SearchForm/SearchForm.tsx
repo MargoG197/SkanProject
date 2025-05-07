@@ -1,16 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import { validateINN } from './helperFunctions';
-
+import "./index.css"
 
 const SearchForm = () => {
 
 const [innError, setInnError] = useState<null|string>(null)
+  const [disabled, setDisabled] = useState(true);
 
   const [formData, setFormData] = useState({
     inn: '',
     tone: 'any',
-    documentsCount: 10,
+    documentsCount: NaN,
     startDate: '',
     endDate: '',
     completeness: {
@@ -22,6 +23,14 @@ const [innError, setInnError] = useState<null|string>(null)
       newsDigests: false,
     }
   });
+
+  useEffect(() => {
+    if (validateINN(formData.inn).isValid && formData.documentsCount && formData.endDate && formData.startDate) {
+      setDisabled(false)
+    } else {
+      setDisabled(true)
+    }
+  }, [formData])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     let { name, value, type } = e.target;
@@ -63,10 +72,10 @@ const [innError, setInnError] = useState<null|string>(null)
 
   return (
     <form 
+      className='searchForm_form'
       onSubmit={handleSubmit}
       style={{
-        width:'100%',
-        padding: '21px 39px 32px 44px',
+        width: '100%',
         backgroundColor: '#fff',
         borderRadius: '16px',
         boxShadow: '0 1px 10px rgba(0,0,0,0.4)',
@@ -79,7 +88,7 @@ const [innError, setInnError] = useState<null|string>(null)
       <div style={{display:'flex', flexDirection:'column', justifyContent:'space-around',}}>
         {/* ИНН компании */}
         <div style={{ height: '93px', display: 'flex', flexDirection: 'column', justifyContent:'space-around'}}>
-        <label style={{ display: 'block', fontSize: '18px', fontWeight: 400, }}>
+        <label style={{ display: 'block', }}>
           ИНН компании*
         </label>
           <input
@@ -90,7 +99,6 @@ const [innError, setInnError] = useState<null|string>(null)
           onChange={handleChange}
           required
           style={{
-            width: '242px',
             height:'43px',
             padding: '3px 10px',
             boxSizing:'border-box',
@@ -113,7 +121,7 @@ const [innError, setInnError] = useState<null|string>(null)
       </div>
       {/* Тональность */}
       <div style={{ height: '93px', display: 'flex', flexDirection: 'column', justifyContent:'space-around'}} >
-        <label style={{ display: 'block', fontSize: '18px', fontWeight: 400, }}>
+        <label style={{ display: 'block' }}>
           Тональность
         </label>
         <select
@@ -121,7 +129,6 @@ const [innError, setInnError] = useState<null|string>(null)
           value={formData.tone}
           onChange={handleChange}
           style={{
-            width: '242px',
             height:'43px',
             padding: '3px 10px',
             boxSizing:'border-box',
@@ -140,19 +147,19 @@ const [innError, setInnError] = useState<null|string>(null)
       </div>
       {/* Количество документов */}
       <div style={{ height: '93px', display: 'flex', flexDirection: 'column', justifyContent:'space-around'}}>
-        <label style={{ display: 'block', fontSize: '18px', fontWeight: 400, }}>
+        <label style={{ display: 'block',  }}>
           Количество документов в выдаче*
         </label>
         <input
           type="number"
           name="documentsCount"
+          placeholder='от 1 до 1000'
           min="1"
           max="1000"
           value={formData.documentsCount}
           onChange={handleChange}
           required
           style={{
-            width: '242px',
             height:'43px',
             padding: '3px 10px',
             boxSizing:'border-box',
@@ -165,13 +172,14 @@ const [innError, setInnError] = useState<null|string>(null)
         />
       </div>
       {/* Диапазон дат */}
-      <div style={{ marginBottom: '1.5rem' }}>
-        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#374151', marginBottom: '0.25rem' }}>
+      <div >
+        <label style={{ display: 'block', color: '#374151', marginBottom: '0.25rem' }}>
           Диапазон поиска*
         </label>
-        <div style={{ display: 'flex', width:'100%', justifyContent:'space-between' }}>
+        <div  className='searchForm_dates' style={{ display: 'flex', width:'100%',  }}>
           <div>
-            <input
+              <input
+                className='searchForm_dateInput'
               type="date"
               placeholder='Дата начала'
               name="startDate"
@@ -179,7 +187,6 @@ const [innError, setInnError] = useState<null|string>(null)
               onChange={handleChange}
               required
               style={{
-                width: '100%',
                 border: '1px solid #d1d5db',
                 borderRadius: '4px',
                 outline: 'none',
@@ -188,7 +195,8 @@ const [innError, setInnError] = useState<null|string>(null)
             />
             </div>
             <div>
-            <input
+              <input
+                className='searchForm_dateInput'
               type="date"
               name="endDate"
               placeholder='Дата конца'
@@ -196,7 +204,6 @@ const [innError, setInnError] = useState<null|string>(null)
               onChange={handleChange}
               required
               style={{
-                width: '100%',
                 border: '1px solid #d1d5db',
                 borderRadius: '4px',
                 outline: 'none',
@@ -207,11 +214,9 @@ const [innError, setInnError] = useState<null|string>(null)
           </div>
         </div>
       </div>
-      <div style={{display:'flex', flexDirection:'column', justifyContent:'space-around'}}>
-        <div
-          // style={{ marginBottom: '2rem' }}
-        >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+      <div style={{display: 'flex', flexDirection:'column', justifyContent:'space-between', marginTop:'20px'}}>
+        <div>
+        <div className='searchForm_ticksSection' style={{  flexDirection: 'column', gap: '15px' }}>
             {[
             { id: 'fullness', label: 'Признак максимальной полноты', disabled:false},
             { id: 'businessContext', label: 'Упоминания в бизнес-контексте', disabled:false },
@@ -236,7 +241,7 @@ const [innError, setInnError] = useState<null|string>(null)
                   marginRight: '0.5rem',
                 }}
               />
-              <label htmlFor={item.id} style={{ fontSize: '0.875rem', color: `${item.disabled==true ? 'gray' : 'black'}`}}>
+              <label htmlFor={item.id} style={{ color: `${item.disabled==true ? 'gray' : 'black'}`}}>
                 {item.label}
               </label>
             </div>
@@ -244,13 +249,12 @@ const [innError, setInnError] = useState<null|string>(null)
         </div>
       </div>
         {/* Кнопка поиска */}
-        <div>
-      <Button onClickFunc={() => { }} btnText="Поиск" bg='#5970FF' textColor='#FFFFFF'/>
-      <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '1rem' }}>
-      <span style={{ color: '#949494' }}>*</span> Обязательные к заполнению поля
+      <div className='searchForm_buttonDiv'>
+      <Button onClickFunc={() => { }} btnText="Поиск" bg='#5970FF' textColor='#FFFFFF' maxWidth={305} disabled={disabled} />
+      <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '1rem', margin:'0'}}>
+      * Обязательные к заполнению поля
       </p>
-        </div>
-      
+      </div>
       </div> 
     </form>
   );
