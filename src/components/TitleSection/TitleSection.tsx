@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "../Button/Button"
 import './index.css'
-
+import { useNavigate } from 'react-router-dom';
 
 
 const TitleSection = () => {
@@ -21,6 +21,12 @@ const TitleSection = () => {
         return () => window.removeEventListener('resize', handleResize);
         }, []);
 
+        const navigate = useNavigate();
+
+        const handleClick = () => {
+          navigate('/search');
+  };
+  
 
 
   return (
@@ -57,7 +63,7 @@ const TitleSection = () => {
         Комплексный анализ публикаций, получение данных в формате PDF на электронную почту.
         </p>
         </div>
-        <Button  onClickFunc={()=>{}} btnText="Запросить данные" bg="#5970FF" textColor="white"
+        <Button  onClickFunc={handleClick} btnText="Запросить данные" bg="#5970FF" textColor="white"
 				 maxWidth={screenWidth >= 842 ? 355 : screenWidth >= 842 ? 289 : 335}
 				 />
       </div>
