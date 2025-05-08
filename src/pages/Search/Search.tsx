@@ -1,12 +1,19 @@
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import SearchSection from "../../components/SearchSection/SearchSection";
+// import SearchSection from "../../components/SearchSection/SearchSection";
+import SearchResultSection from "../../components/SearchResultSection/SearchResultSection";
 
 
 
 
 const SearchPage = ()=>{
 	
+
+
+
+
+
+
 	return (
 		<div style={{
       display: 'flex',
@@ -15,7 +22,8 @@ const SearchPage = ()=>{
       justifyContent: 'space-between',
     }}>
 		<Header />
-		<SearchSection />
+			{/* <SearchSection /> */}
+			<SearchResultSection />
 		<Footer />
 		</div>
 		

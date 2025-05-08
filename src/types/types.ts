@@ -185,7 +185,17 @@ type TAuth = {
     }
   }
   
+type TArtcile = {
   
+    date: string;
+    source: string;
+    title: string;
+    category: string;
+    content: string[];
+    readMoreLink: string;
+    wordCount: number;
 
-export type { TTariff, TAuth, TToken, TAccInfo, THistogramData, TobjSearchResult, ThistogramResult}
+  }
+
+export type { TTariff, TAuth, TToken, TAccInfo, THistogramData, TobjSearchResult, ThistogramResult, TArtcile}
 

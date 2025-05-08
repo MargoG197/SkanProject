@@ -37,7 +37,6 @@ const TitleSection = () => {
         alignItems: 'center', 
 				width: '90%',
         margin: '69px',
-				
         height: "fit-content",
       }}
     >
