@@ -1,4 +1,7 @@
 import React from "react"
+import "./index.css";
+
+
 
 type THistogramCardProps = {
   data: {
@@ -13,16 +16,18 @@ const HistogramCard: React.FC<THistogramCardProps> = ({data}) => {
 
 
   return (
-    <div style={{
-      padding: "16px",
-      borderRadius: "8px",
-      boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-      border: "1px solid #e0e0e0",
+    <div className="histogramCard" style={{
+      margin: "16px 0",
+      padding:"4px 0",
+      borderLeft:"2px solid #e0e0e0",
       display: "flex",
       flexDirection: "column",
       justifyContent:'space-between',
       alignItems: "center",
-      width: '133px'
+      width: '133px',
+      height: '155px',
+      minWidth: '133px',
+      minHeight: '155px',
     }}>
       {/* Дата */}
       <div style={{

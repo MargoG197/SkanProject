@@ -1,0 +1,9 @@
+
+.histogramCard{
+  transform: all 0.7s ease-in-out;
+}
+
+.histogramCard:hover {
+  transform: translate(-1px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15)
+  }

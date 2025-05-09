@@ -1,0 +1,8 @@
+.histogramTable_arrow{
+  background-color: transparent;
+  transform: backbackground-color 0.7s ease;
+}
+
+.histogramTable_arrow:hover{
+background-color: rgb(201, 206, 204);
+}

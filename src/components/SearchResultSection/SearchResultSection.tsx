@@ -36,7 +36,23 @@ const SearchResultSection = () => {
   }];
 
 
-  const histogramArr = [{date: '20.09.1990',  total: 5,   risks:10}, {date: '20.09.1990',  total: 5,   risks:10}, {date: '20.09.1990',  total: 5,   risks:10}, {date: '20.09.1990',  total: 5,   risks:10}, {date: '20.09.1990',  total: 5,   risks:10}, {date: '20.09.1990',  total: 5,   risks:10}]
+  const histogramArr = [{ date: '20.09.1989', total: 980, risks: 10 },
+    { date: '20.09.1990', total: 70, risks: 10 },
+    { date: '20.09.1991', total: 50, risks: 54 },
+    { date: '20.09.1992', total: 78, risks: 11 },
+    { date: '20.09.1993', total: 67, risks: 10 },
+    { date: '20.09.1994', total: 4, risks: 93 },
+    { date: '20.09.1995', total: 5, risks: 46 },
+    { date: '20.09.1996', total: 532, risks: 27 },
+    { date: '20.09.1997', total: 51, risks: 65 },
+    { date: '20.09.1998', total: 5, risks: 772 },
+    { date: '20.09.1999', total: 5, risks: 267 },
+    { date: '20.09.2000', total: 54, risks: 1845 },
+    { date: '20.09.2001', total: 7, risks: 123 },
+    { date: '20.09.2002', total: 84, risks: 34 },
+    { date: '20.09.2003', total: 5, risks: 45 },
+    { date: '20.09.2004', total: 98, risks: 67 },
+  ]
 
 
   return (
@@ -49,7 +65,7 @@ const SearchResultSection = () => {
         <img style={{width: '30%', height: 'auto',}} src="../../../src/icons/searchLady.svg"/>
       </div>
       <HistogramTable cardsArray={histogramArr}/>
-      <div style={{ display: 'flex', width: '100%', gap: '38px', marginBottom: '50px',}}>
+      <div style={{ display: 'flex', width: '100%', gap: '38px', margin: '50px 0',}}>
         {articles.map((article) => (
         <ArticleCard data={article} />
       ))}
