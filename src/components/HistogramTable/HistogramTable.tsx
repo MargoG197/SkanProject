@@ -30,7 +30,7 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray }) => {
 
         const screenWidth = window.innerWidth;
         setScreenWidth(screenWidth);
-        screenWidth >= 375 && setNumberOfVisibleItems(Math.ceil(blockWidth/133))
+        screenWidth >= 404 ? setNumberOfVisibleItems(Math.ceil(blockWidth/133)) : setNumberOfVisibleItems(Math.ceil(blockWidth/295))
         };
       }
 
@@ -45,18 +45,18 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray }) => {
       
     } else {
       setCurrentPosition(() =>
-      (screenWidth >= 375) ? currentPosition - 133 : currentPosition - 140
+      (screenWidth >= 404) ? currentPosition - 133 : currentPosition - 295
     );
     setNumberOfVisibleItems(numberOfVisibleItems+1)
     }
   };
 
   const prevSlide = () => {
-    if (numberOfVisibleItems <= Math.ceil(width/133)) {
+    if (screenWidth >= 404 ? numberOfVisibleItems <= Math.ceil(width/133) : 1) {
       
     } else {
       setCurrentPosition(() =>
-      (screenWidth >= 375) ? currentPosition + 133 : currentPosition + 140
+      (screenWidth >= 404) ? currentPosition + 133 : currentPosition + 295
       );
       setNumberOfVisibleItems(numberOfVisibleItems-1)
     }
@@ -71,7 +71,6 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray }) => {
       className="histogramTable"
       style={{
         height: "260px",
-        width: "100%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -101,7 +100,12 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray }) => {
 
       <div
         className="histogramTable_carouseldiv"
-        style={{ marginBottom: "40px 0", display: 'flex', justifyContent: "space-between", width:'95%', gap: '10px' }}
+        style={{
+          marginBottom: "40px 0",
+          display: 'flex',
+          justifyContent: "space-between",
+          width: '95%',
+        }}
       >
         <button onClick={prevSlide} className="histogramTable_arrow" style={{border:"none", borderRadius:'8px', cursor:'pointer', }}><img  src="../../../src/icons/shevron_right.svg"/></button>
         <div
@@ -115,16 +119,13 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray }) => {
           }}
         >
           <div
+            className="histogramTable_TableHead"
             style={{
               display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-around",
+              
               color: "white",
               backgroundColor: "#029491",
-              width: "133px",
-              minWidth: '133px',
               alignItems: "center",
-              padding: "4px 0",
               zIndex:'3'
             }}
           >
@@ -133,7 +134,7 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray }) => {
             <p>Риски</p>
           </div>
           <div
-           ref={blockRef} 
+             ref={blockRef} 
             style={{
             display: "flex",
             borderRadius: "8px",

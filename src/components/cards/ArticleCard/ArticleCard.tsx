@@ -1,7 +1,7 @@
 import { TArtcile } from "../../../types/types"
 import Button from "../../Button/Button";
 import { useNavigate } from "react-router-dom";
-
+import "./index.css"
 
 type TArticleCardProps = {
   data:  TArtcile;
@@ -10,22 +10,17 @@ type TArticleCardProps = {
 
 const ArticleCard:React.FC<TArticleCardProps> = ({data}) => {
   
-
   const navigate = useNavigate();
-  
   const handleClick = () => {
   navigate(data.readMoreLink);
 };
 
   return (
-    <div style={{
-      maxWidth: "641px",
-      maxHeight:'694px',
-      padding: "19px 30px 35px",
+  
+    <div className="articleCard" style={{
       borderRadius: "8px",
       boxShadow: "0 2px 10px rgba(0, 0, 0, 0.08)",
       border: "1px solid #eaeaea",
-      fontFamily: "Arial, sans-serif",
       color: "#333"
     }}>
       {/* Заголовок и дата */}
@@ -69,10 +64,12 @@ const ArticleCard:React.FC<TArticleCardProps> = ({data}) => {
       <div style={{
         marginBottom: "20px",
         lineHeight: "1.6",
-        fontSize: "15px"
+        fontSize: "15px",
+        overflowY: 'auto',
+        maxHeight:'200px'
       }}>
         {data.content.map((paragraph, index) => (
-          <p key={index} style={{ margin: "0 0 12px 0" }}>
+          <p key={index} style={{ margin: "0 0 12px 0",  }}>
             {paragraph}
           </p>
         ))}
@@ -85,7 +82,8 @@ const ArticleCard:React.FC<TArticleCardProps> = ({data}) => {
         alignItems: "center",
         fontSize: "14px",
         color: "#666",
-        paddingTop: "16px"
+        paddingTop: "16px",
+        gap:'10px',
       }}>
         <Button onClickFunc={handleClick} btnText="Читать в источнике" bg='#7CE3E1' textColor='black' maxWidth={223} />
         <span>{data.wordCount.toLocaleString()} слова</span>
