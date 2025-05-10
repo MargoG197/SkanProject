@@ -1,16 +1,15 @@
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-// import SearchSection from "../../components/SearchSection/SearchSection";
-import SearchResultSection from "../../components/SearchResultSection/SearchResultSection";
+import SearchSection from "../../components/SearchSection/SearchSection";
+import { useState } from "react";
+// import SearchResultSection from "../../components/SearchResultSection/SearchResultSection";
 
 
 
 
 const SearchPage = ()=>{
 	
-
-
-
+const [isSearching, setIsSearching] = useState(false)
 
 
 
@@ -22,8 +21,8 @@ const SearchPage = ()=>{
       justifyContent: 'space-between',
     }}>
 		<Header />
-			{/* <SearchSection /> */}
-			<SearchResultSection />
+			<SearchSection setIsSearching={setIsSearching} />
+			{/* <SearchResultSection /> */}
 		<Footer />
 		</div>
 		

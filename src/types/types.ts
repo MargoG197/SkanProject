@@ -1,145 +1,72 @@
+
+
 type THistogramData = {
-    intervalType: string,
-    histogramTypes: number[],
-    issueDateInterval: {
-      startDate: string,
-      endDate: string
-    },
-    searchContext: {
-      targetSearchEntitiesContext: {
-        targetSearchEntities: [
-          {
-            type: string
-          }
-        ],
-        onlyMainRole: boolean,
-        tonality: string,
-        onlyWithRiskFactors: boolean,
-        riskFactors: {
-          and: [
-            {
-              id: number
-            }
-          ],
-          or: [
-            {
-              id: number
-            }
-          ],
-          not: [
-            {
-              id: number
-            }
-          ]
-        },
-        themes: {
-          and: [
-            {
-            tonality: string,
-            entityId: number
-            }
-          ],
-          or: [
-            {
-              tonality: string,
-              entityId: number
-            }
-          ],
-          not: [
-            {
-              tonality: string,
-              entityId: number
-            }
-          ]
-        }
-      },
-      searchEntitiesFilter: {
-        and: [
-          {
-          type: string
-          }
-        ],
-        or: [
-          {
-            type: string
-          }
-        ],
-        not: [
-          {
-            type: string
-          }
-        ]
-      },
-      locationsFilter: {
-        and: [
-          {
-            countryCode: string,
-            regionCode: number
-          }
-        ],
-        or: [
-          {
-            countryCode: string,
-            regionCode: number
-          }
-        ],
-        not: [
-          {
-            countryCode: string,
-            regionCode: number
-          }
-        ]
-      },
-      themesFilter: {
-        and: [
-          {
-            entityId: number
-          }
-        ],
-        or: [
-          {
-            entityId: number
-          }
-        ],
-        not: [
-          {
-            entityId: number
-          }
-        ]
+  issueDateInterval: {
+  "startDate": string,
+  "endDate": string
+},
+"searchContext": {
+  "targetSearchEntitiesContext": {
+    "targetSearchEntities": [
+      {
+        "type": "company",
+        "sparkId": null,
+        "entityId": null,
+        "inn": string,
+        "maxFullness": boolean,
+        "inBusinessNews": null
       }
+    ],
+    "onlyMainRole": boolean,
+    "tonality": string,
+    "onlyWithRiskFactors": boolean,
+    "riskFactors": {
+      "and": [],
+      "or": [],
+      "not": []
     },
-    searchArea: {
-      includedSources: number[],
-      excludedSources: number[],
-      includedSourceGroups: number[],
-      excludedSourceGroups: number[],
-      includedDistributionMethods: number[],
-      excludedDistributionMethods: number[],
- },
-    attributeFilters: {
-      excludeTechNews: boolean,
-      excludeAnnouncements: boolean,
-      excludeDigests: boolean
-    },
-    similarMode: string
-}
-  
-type TobjSearchResult = {
-  items: [
-    {
-      encodedId: string,
-      influence: number,
-      similarCount: number
+    "themes": {
+      "and": [],
+      "or": [],
+      "not": []
     }
-  ],
-  mappings: [
-    {
-      sparkId: number,
-      inn: string,
-      entityIds: number[]
-    }
-  ]
+  },
+  "themesFilter": {
+    "and": [],
+    "or": [],
+    "not": []
+  }
+},
+"searchArea": {
+  "includedSources": [],
+  "excludedSources": [],
+  "includedSourceGroups": [],
+  "excludedSourceGroups": []
+},
+"attributeFilters": {
+  "excludeTechNews": boolean,
+  "excludeAnnouncements": boolean,
+  "excludeDigests": boolean
+},
+"similarMode": "duplicates",
+"limit": number,
+"sortType": "sourceInfluence",
+"sortDirectionType": "desc"| "asc",
+"intervalType": "month"|"day"|"quarter"|"year"|"week",
+"histogramTypes": [
+  "totalDocuments",
+  "riskFactors"
+]
 }
+
+type TObjectResult = {
+
+    "encodedId": string,
+    "influence": number,
+    "similarCount": number
+
+}
+
 
 type ThistogramResult = {
   data: [
@@ -167,6 +94,27 @@ type TTariff = {
   svg: string
   textColor:string
 }
+
+type TArticleResponse = {
+  
+  ok: {
+    attributes: { isTechNews: boolean, isAnnouncement: boolean, isDigest: boolean, isSpeechRecognition: boolean, isReducedContent: boolean }
+    content: 
+    {markup: string}
+    dedupClusterId:string
+    entities:{companies: number[], people: number[], themes: string[], locations: string[]}
+    id:string
+    issueDate:string
+    language :string
+    plotClusterId : string
+    schemaVersion:string
+    source: { id: number, groupId: number, name: string, categoryId: number, levelId: number }
+    title:{text: string, markup: string}
+    url:string
+    version:number
+}
+  }
+
 
 type TAuth = {
   login: string,
@@ -197,5 +145,5 @@ type TArtcile = {
 
   }
 
-export type { TTariff, TAuth, TToken, TAccInfo, THistogramData, TobjSearchResult, ThistogramResult, TArtcile}
+export type { TTariff, TAuth, TToken, TAccInfo, THistogramData, ThistogramResult, TArtcile, TObjectResult,  TArticleResponse}
 

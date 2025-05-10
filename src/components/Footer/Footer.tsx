@@ -40,7 +40,7 @@ const Footer = () => {
             +7 485 771 21 11
           </div>
           <div style={{ fontSize: '16px' }}>
-            info@ckan.ru
+            info@skan.ru
           </div>
            {/* Копирайт */}
         <div style={{

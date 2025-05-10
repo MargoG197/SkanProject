@@ -1,11 +1,16 @@
 import SearchForm from "../SearchForm/SearchForm";
 import "./index.css"
 
-const SearchSection = () => {
+
+type TSearchSectionProps = {
+  setIsSearching:React.Dispatch<React.SetStateAction<boolean>>
+}
+const SearchSection:React.FC<TSearchSectionProps> = ({setIsSearching}) => {
   
 
+
+
   return (
-    
     <div style={{
       width:'100%',
       display: 'flex',
@@ -51,7 +56,7 @@ const SearchSection = () => {
         </div>
         <div className="searchArea" style={{ width: '100%', display: 'flex', alignItems:'center', justifyContent:'space-between' }}>
          <div className="searchArea_searchForm" >
-        <SearchForm />
+            <SearchForm setIsSearching={setIsSearching} />
           </div>
         <img src="../../../src/icons/SearchPic.svg" className="searchArea_img"/>
         </div>

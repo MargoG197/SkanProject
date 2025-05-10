@@ -1,15 +1,16 @@
+import { TArticleResponse } from "../types/types";
 import { apiSlice } from "./apiSlice";
 
 
 type TRequest = {
-  ids: string[],
+  idObj: {ids: string[]},
   token:string
 }
 
 export const documentsSearchServiceAPI = apiSlice.injectEndpoints({
   endpoints: (build) => ({
-     documentsSearch: build.mutation<any, TRequest>({
-      query: ({ids, token}) => ({
+     documentsSearch: build.mutation< TArticleResponse[], TRequest>({
+      query: ({idObj, token}) => ({
         method: "POST",
         url: '/api/v1/documents',
         headers: {
@@ -17,7 +18,7 @@ export const documentsSearchServiceAPI = apiSlice.injectEndpoints({
         'Content-type': 'application/json',
         'Accept': 'application/json'
          },
-         body:JSON.stringify(ids)
+         body:JSON.stringify(idObj)
        }),
       //  providesTags:['login']
      })

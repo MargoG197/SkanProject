@@ -1,4 +1,4 @@
-import { THistogramData, ThistogramResult, TobjSearchResult } from "../types/types";
+import { THistogramData, ThistogramResult, TObjectResult} from "../types/types";
 import { apiSlice } from "./apiSlice";
 
 
@@ -9,7 +9,7 @@ type TRequest = {
 
 export const objectSearchServiceAPI = apiSlice.injectEndpoints({
   endpoints: (build) => ({
-     histogramSearch: build.mutation<ThistogramResult, TRequest>({
+    histogramSearch: build.mutation < {data:ThistogramResult[]}, TRequest>({
       query: ({data, token}) => ({
         method: "POST",
         url: '/api/v1/objectsearch/histograms',
@@ -22,7 +22,7 @@ export const objectSearchServiceAPI = apiSlice.injectEndpoints({
        }),
       //  providesTags:['login']
      }),
-    loginAPI: build.mutation<TobjSearchResult, TRequest>({
+    objectSearch: build.mutation<{items:TObjectResult[]}, TRequest>({
       query: ({data, token}) => ({
         method: "POST",
         url: '/api/v1/objectsearch',
@@ -40,4 +40,4 @@ export const objectSearchServiceAPI = apiSlice.injectEndpoints({
 
 })
 
-export const {useHistogramSearchMutation, useLoginAPIMutation} = objectSearchServiceAPI
+export const {useHistogramSearchMutation, useObjectSearchMutation} = objectSearchServiceAPI
