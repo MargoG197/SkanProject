@@ -1,5 +1,6 @@
-
 function parseXmlText(xmlString: string): string {
+
+  // console.log(xmlString, "xmlString")
   // Создаем временный элемент для парсинга XML
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(xmlString, "text/xml");
@@ -37,8 +38,11 @@ function parseXmlText(xmlString: string): string {
     '&apos;': "'"
   };
   
+  const improvedTagRegex = /<\/?[\w][^>]*>/g;
+  
   for (const [entity, char] of Object.entries(entities)) {
-    result = result.replace(new RegExp(entity, 'g'), char);
+    result = result.replace(new RegExp(entity, 'g'), char)
+      .replace(improvedTagRegex , '')
   }
   
   return result

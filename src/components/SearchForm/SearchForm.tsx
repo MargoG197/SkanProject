@@ -124,6 +124,7 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
           name="inn"
           value={formData.inn}
           onChange={handleChange}
+          // defaultValue={7710137066}
           required
           style={{
             height:'43px',
@@ -174,7 +175,8 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
           name="documentsCount"
           placeholder='от 1 до 1000'
           min="1"
-          max="1000"
+            max="1000"
+            // defaultValue={1000}
           value={formData.documentsCount || ''}
           onChange={handleChange}
           required
@@ -220,7 +222,8 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
               onBlur={handleBlur}
               className='searchForm_dateInput'
               type="date"
-              name="endDate"
+                name="endDate"
+                // defaultValue={'11.05.2025'}
               placeholder='Дата конца'
               value={formData.endDate}
               onChange={handleChange}

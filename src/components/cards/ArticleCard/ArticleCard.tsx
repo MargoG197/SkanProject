@@ -60,21 +60,16 @@ const ArticleCard:React.FC<TArticleCardProps> = ({data}) => {
       }}>
         {data.attributes.isTechNews ? "Техничские новости" : "Другие новости"}
       </div>
-      {/* <div style={{
-        width: '100%', height: '158px', maxHeight: '158px', backgroundColor: 'green',
-        borderRadius: '8px', marginBottom: '20px', textAlign: 'center',
-      }}>{data.}</div> */}
-      {/* Текст статьи */}
       <div style={{
         marginBottom: "20px",
         lineHeight: "1.6",
         fontSize: "15px",
         overflowY: 'auto',
-        maxHeight:'200px'
+        maxHeight:'400px'
       }}>
-          <p  style={{ margin: "0 0 12px 0",  }}>
+          <div style={{ margin: "0 0 12px 0",  }}>
             {parseXmlText(data.content.markup)}
-          </p>
+          </div>
       </div>
 
       {/* Футер карточки */}
@@ -88,7 +83,7 @@ const ArticleCard:React.FC<TArticleCardProps> = ({data}) => {
         gap:'10px',
       }}>
         <Button onClickFunc={handleClick} btnText="Читать в источнике" bg='#7CE3E1' textColor='black' maxWidth={223} />
-        {/* <span>{data.word} слова</span> */}
+        <span>{parseXmlText(data.content.markup).length} слов</span>
       </div>
     </div>
   )

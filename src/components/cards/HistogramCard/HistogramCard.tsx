@@ -14,7 +14,7 @@ const HistogramCard: React.FC<THistogramCardProps> = ({card}) => {
   const day = String(cardDate.getDate()).padStart(2, '0');
   const month = String(cardDate.getMonth() + 1).padStart(2, '0'); // Месяцы 0-11
   const year = cardDate.getFullYear();
-  const dateString = `${day} ${month}, ${year}`;
+  const dateString = `${day}.${month}.${year}`;
 
 
   return (

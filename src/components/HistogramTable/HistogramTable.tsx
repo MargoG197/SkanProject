@@ -21,7 +21,6 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray,  isLoading
   
       // Определяем ширину карточки и количество видимых карточек и ширину экрана
   useEffect(() => {
-        
     const handleResize = () => {
       if (blockRef.current) {
         const blockWidth = blockRef.current.getBoundingClientRect().width;
@@ -111,9 +110,10 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray,  isLoading
         >
           Общая сводка
         </h1>
-        <p style={{ fontSize: "18px", color: "#949494" }}>
-          Найдено {cardsArray.length} вариантов
-        </p>
+        { !isLoading && <p style={{ fontSize: "18px", color: "#949494" }}>
+          Найдено {cardsArray[0]?.data?.length} вариантов
+        </p>}
+        
       </div>
 
       <div
