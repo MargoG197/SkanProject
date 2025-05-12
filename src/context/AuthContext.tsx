@@ -8,7 +8,8 @@ type TAuthContext = {
   login: (data:TAuth) => Promise<void|TToken>
   logout: () => void
   token: string|null
-  tokenExpirationTime:string|null
+  tokenExpirationTime: string | null
+  loginError: string | null
 }
 
 async function getLogin(data:TAuth) {
@@ -25,7 +26,8 @@ const defaultAuthcontext:TAuthContext = {
   login: getLogin,
   logout: () => { },
   token: null,
-  tokenExpirationTime:null
+  tokenExpirationTime: null,
+  loginError:null
 };
 
 
@@ -34,7 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 const [isAuthenticated, setIsAuthenticated] = useState(false);
 const [token, setToken] = useState<string | null>(localStorage.getItem('token') ? localStorage.getItem('token') as string : null);
 const [tokenExpirationTime , setTokenExpirationTime ] = useState<string|null>(localStorage.getItem('expirationToken') ? localStorage.getItem('expirationToken') as string : null)
-
+const [loginError, setLoginError] = useState<string|null>('')
 async function getLogin(data:TAuth) {
   try {
     const result = await loginAxios(data);
@@ -43,10 +45,13 @@ async function getLogin(data:TAuth) {
       setTokenExpirationTime(result.expire);
       localStorage.setItem('token', `${result.accessToken}`)
       localStorage.setItem('expirationToken', `${result.expire}`)
-      console.log(result)
-
-  } catch (err) {
-    console.log(err)
+    setLoginError(null)
+    return(result)
+  } catch (err: any) {
+    if (err == "Error: Неправильное имя или пароль") {
+      setLoginError("Неправильное имя или пароль")
+      console.log(err, "Неправильное имя или пароль")
+      }
     }
 }
 
@@ -89,7 +94,7 @@ async function getLogin(data:TAuth) {
   const logout = useCallback(() => logoutFunc(), []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, token, tokenExpirationTime }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, loginError, logout, token, tokenExpirationTime}}>
       {children}
     </AuthContext.Provider>
   );

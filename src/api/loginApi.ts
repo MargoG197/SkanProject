@@ -31,9 +31,12 @@ export const loginAxios = async (
       data: JSON.stringify(data),
     });
   return response.data
-  } catch (err:any) {
-    console.error('Post login request has failed', err);
-    throw new Error(err);
+  } catch (err: any) {
+    if (err.response.data.message.includes("Неправильное имя или пароль")) {
+      throw new Error("Неправильное имя или пароль");
+    } else {
+      throw new Error(err);
+    }   
   }
 };
 

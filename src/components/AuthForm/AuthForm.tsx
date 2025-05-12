@@ -1,17 +1,19 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./index.css";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
+
 
 const AuthForm: React.FC = () => {
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+  // const [loginError, setLoginError] = useState('')
   const [showPassword, setShowPassword] = useState(false); // Состояние для отображения пароля
   const isFormValid = login.trim() !== '' && password.trim() !== '';
   const holdTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const {login:loginFunc} = useAuth(); // Получаем данные из контекста
+  const {login:loginFunc, loginError, isAuthenticated} = useAuth(); // Получаем данные из контекста
   
   const navigate = useNavigate();
   const redirect = () => {
@@ -42,14 +44,14 @@ type TAuth = {
       login: login.trim(),
       password: password.trim()
     }
-// console.log(obj, "object")
     if (login.length > 0 && password.length > 0) {
       try {
         const response = await loginFunc(obj);
-        redirect()
-        console.log(response, 'login response');
-      } catch (err) {
-        console.log(err, 'error')
+        if (response!= undefined) {
+         redirect()
+       }
+      } catch (err:any) {
+        console.log(err, 'login error AuthForm')
       }
     }
 }
@@ -97,7 +99,6 @@ type TAuth = {
             cursor: "pointer",
             borderBottom: "solid 1px #029491",
             width: '44%',
-            // minWidth: "151px",
             boxSizing: "border-box",
             height: "29px",
           }}
@@ -116,7 +117,6 @@ type TAuth = {
             width: '54%',
             boxSizing: "border-box",
             height: "29px",
-            
           }}
           disabled
         >
@@ -144,7 +144,7 @@ type TAuth = {
               width: "100%",
               minWidth:'100%',
               padding: "12px",
-              border: "1px solid #d9d9d9",
+              border: `${loginError ? "1px solid red" :"1px solid #d9d9d9"}`,
               borderRadius: "4px",
               fontSize: "16px",
             }}
@@ -171,7 +171,7 @@ type TAuth = {
               width: "100%",
               minWidth:'100%',
               padding: "12px",
-              border: "1px solid #d9d9d9",
+              border: `${loginError ? "1px solid red" :"1px solid #d9d9d9"}`,
               borderRadius: "4px",
               fontSize: "16px",
             }}
@@ -193,6 +193,7 @@ type TAuth = {
         >
           {showPassword ? 'Скрыть' : 'Показать пароль'}
         </button>
+        {loginError && <p style={{color:'red'}}>{loginError}</p>}
         </div>
         {/* Кнопка входа */}
         <button
