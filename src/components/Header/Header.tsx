@@ -3,12 +3,8 @@ import LimitCard from "../cards/LimitCard/LimitCard";
 import "./index.css";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
-
-
 const Header = () => {
   const { isAuthenticated, logout } = useAuth(); // Получаем данные из контекста
-
-
 
   return (
     <header
@@ -16,7 +12,8 @@ const Header = () => {
         backgroundColor: "#ffffff",
         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
         overflowX: "hidden",
-      }}>
+      }}
+    >
       <div
         className="headerInnerDiv"
         style={{
@@ -28,7 +25,6 @@ const Header = () => {
           width: "100%",
         }}
       >
-        {/* Логотип и название */}
         <img
           src="../src/icons/ColorLogo.svg"
           alt="CKAH Logo"
@@ -38,7 +34,6 @@ const Header = () => {
           className="navDiv"
           style={{
             display: "flex",
-            justifyContent: "space-between",
             alignItems: "center",
             boxSizing: "border-box",
             height: "93px",
@@ -48,9 +43,9 @@ const Header = () => {
             <ul
               className="navigationUL"
               style={{
-                display: "flex",
                 listStyle: "none",
-                alignItems: "justify-between",
+                display: 'flex',
+        
                 boxSizing: "border-box",
                 padding: "0",
               }}
@@ -70,46 +65,46 @@ const Header = () => {
                   FAQ
                 </a>
               </li>
-              {/* Блок для авторизованных пользователей */}
             </ul>
           </nav>
 
           {isAuthenticated ? (
             <>
-            <LimitCard />
-              <div
-                className="userNameSection"
-              >
-                <div style={{
-                  flexDirection: "column",
-                  justifyContent:'flex-end',
-                  alignItems: "flex-end",
-                  height: "32px",
-                  width: "111px",
-                  textAlign:'right',
-                }}><p style={{ color: "#333", margin: "0"}}>Алексей А.</p>
-                <button
-                  onClick={logout}
+              <LimitCard />
+              <div className="userNameSection">
+                <div
                   style={{
-                    backgroundColor: "transparent",
-                    border: "none",
-                    borderRadius: "4px",
-                    cursor: "pointer",
+                    flexDirection: "column",
+                    justifyContent: "flex-end",
+                    alignItems: "flex-end",
+                    height: "32px",
+                    width: "111px",
+                    textAlign: "right",
                   }}
                 >
-                  Выйти
+                  <p style={{ color: "#333", margin: "0" }}>Алексей А.</p>
+                  <button
+                    onClick={logout}
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "none",
+                      borderRadius: "4px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Выйти
                   </button>
                 </div>
-                <img src="../../../src/icons/Ava.png"/>
+                <img src="../../../src/icons/Ava.png" />
               </div>
             </>
           ) : (
             <div
+              className="authIconName"
               style={{
                 width: "251px",
                 minWidth: "251px",
                 gap: "18px",
-                display: "flex",
                 justifyContent: "space-between",
                 boxSizing: "border-box",
                 alignItems: "center",
@@ -117,7 +112,7 @@ const Header = () => {
               }}
             >
               <a
-                href="/register"
+                href=""
                 style={{
                   textDecoration: "none",
                   color: "#D9D1D2",

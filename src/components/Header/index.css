@@ -3,7 +3,13 @@ width: 100%;
 min-width: 375px;
 max-width:100%;
 } 
+.navDiv{
+	justify-content: space-between;
 
+}
+.authIconName{
+	display: flex;
+}
 .headerInnerDiv{
 	padding: 0 60px;
 }
@@ -39,11 +45,19 @@ gap: 10px;
 }
 
 @media (max-width: 806px){
+		/* .navigation{
+		display: none;
+	} */
 	.navDiv{
 		width: 80%;
 	}
 }
 @media (max-width:707px) {
+
+	.authIconName{
+		display: none;
+	}
+
 	.headerInnerDiv{
 		padding: 0 20px;
 		justify-content:space-around
@@ -65,7 +79,9 @@ gap: 10px;
 .userNameSection{
 	display: none;
 }
-/* .burgerMenu{
-	display: block;
-} */
+.navDiv{
+	justify-content: flex-end;
+
+}
+
 }

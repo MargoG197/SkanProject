@@ -127,10 +127,11 @@ type TAuth = {
         <div style={{ marginBottom: "24px", width: "90%" }}>
           <label
             style={{
-              display: "block",
-              marginBottom: "8px",
-              fontSize: "14px",
-              color: "#949494",
+            display: "block",
+            marginBottom: "8px",
+            fontSize: "14px",
+            color: "#949494",
+            width:'100%',
             }}
           >
             Логин или номер телефона:
@@ -141,6 +142,7 @@ type TAuth = {
             onChange={(e) => setLogin(e.target.value)}
             style={{
               width: "100%",
+              minWidth:'100%',
               padding: "12px",
               border: "1px solid #d9d9d9",
               borderRadius: "4px",
@@ -150,7 +152,7 @@ type TAuth = {
           />
         </div>
 
-        <div style={{ marginBottom: "24px", width: "90%" }}>
+        <div style={{ marginBottom: "24px", width: "90%",  }}>
           <label
             style={{
               display: "block",
@@ -167,6 +169,7 @@ type TAuth = {
             onChange={(e) => setPassword(e.target.value)}
             style={{
               width: "100%",
+              minWidth:'100%',
               padding: "12px",
               border: "1px solid #d9d9d9",
               borderRadius: "4px",
