@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import "./index.css";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +13,7 @@ const AuthForm: React.FC = () => {
   const isFormValid = login.trim() !== '' && password.trim() !== '';
   const holdTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const {login:loginFunc, loginError, isAuthenticated} = useAuth(); // Получаем данные из контекста
+  const {login:loginFunc, loginError} = useAuth(); // Получаем данные из контекста
   
   const navigate = useNavigate();
   const redirect = () => {
