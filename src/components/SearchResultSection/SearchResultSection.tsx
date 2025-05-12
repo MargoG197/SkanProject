@@ -3,17 +3,19 @@ import { TArticleResponse, ThistogramResult } from "../../types/types";
 import ArticleCard from "../cards/ArticleCard/ArticleCard";
 import HistogramTable from "../HistogramTable/HistogramTable"
 import "./index.css"
+import Button from "../Button/Button";
 
 type TSearchResultsSectionProps = {
   isSearchingArticles:boolean
 	isSearching:boolean
 	histogramResponse: ThistogramResult
   articles: TArticleResponse
+  updateArticles: ()=>void
 }
 
-const SearchResultSection:React.FC<TSearchResultsSectionProps> = ({isSearchingArticles,	isSearching,	histogramResponse,  articles}) => {
+const SearchResultSection:React.FC<TSearchResultsSectionProps> = ({isSearchingArticles,	isSearching,	histogramResponse,  articles, updateArticles}) => {
   
-console.log(articles, 'articles')
+// console.log(articles, 'articles')
 
 
 
@@ -28,13 +30,15 @@ console.log(articles, 'articles')
         <img  className="searchResultsSection_textDiv_img"  src="../../../src/icons/searchLady.svg"/>
       </div>
       <HistogramTable cardsArray={histogramResponse} isLoading={isSearching} />
-      {isSearchingArticles ? <div className="loader"></div>  : 
-      <div className="articlesCardSection" style={{ display: 'flex', overflowX:'hidden', flexWrap:'wrap'}}>
+      {isSearchingArticles ? <div style={{width:'100%', height:'200px', display:'flex', justifyContent:'center', justifyItems:'center', marginTop:'50px'}}><div className="loader"></div> </div> : 
+      <div className="articlesCardSection" style={{ display: 'flex', overflowX:'hidden', flexWrap:'wrap', overflowY:'visible'}}>
       {articles.map((article) => (
-        <React.Fragment key={article.ok.id}>
-          <ArticleCard data={article.ok}  />
-        </React.Fragment>
-    ))}
+      <React.Fragment key={article.ok.id}>
+      <ArticleCard data={article.ok}  />
+      </React.Fragment>
+      ))}
+      {articles.length > 0 &&
+      <Button onClickFunc={updateArticles} btnText='Показать больше' bg='#5970FF' textColor='#fff' maxWidth={355} />}
     </div>}
       
     </div>

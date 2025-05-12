@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import Button from "../Button/Button"
 import './index.css'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../context/AuthContext";
 
 
 const TitleSection = () => {
   
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  
+    const { isAuthenticated } = useAuth(); 
       // Определяем ширину карточки и количество видимых карточек
       useEffect(() => {
         const handleResize = () => {
@@ -62,9 +63,10 @@ const TitleSection = () => {
         Комплексный анализ публикаций, получение данных в формате PDF на электронную почту.
         </p>
         </div>
-        <Button  onClickFunc={handleClick} btnText="Запросить данные" bg="#5970FF" textColor="white"
+      {isAuthenticated && <Button  onClickFunc={handleClick} btnText="Запросить данные" bg="#5970FF" textColor="white"
 				 maxWidth={screenWidth >= 842 ? 355 : screenWidth >= 842 ? 289 : 335}
-				 />
+				 />}
+        
       </div>
       <img className="titleSectionImg"
       style={{height:'auto'}}

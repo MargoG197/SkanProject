@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useCallback, useEffect } fr
 import { loginAxios } from '../api/loginApi';
 import { TToken, TAuth } from '../api/loginApi';
 
+
 type TAuthContext = {
   isAuthenticated: boolean
   login: (data:TAuth) => Promise<void|TToken>
@@ -48,12 +49,15 @@ async function getLogin(data:TAuth) {
     console.log(err)
     }
 }
+
+ 
   
   const logoutFunc = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('tokenExpiration');
     setToken(null);
-    setTokenExpirationTime(null)
+    setTokenExpirationTime(null);
+    window.location.reload();
   };
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { TArtcile } from "../../../types/types"
 import Button from "../../Button/Button";
 import { useNavigate } from "react-router-dom";
-import { parseXmlText } from "./helperFunction";
+import { parseXmlText, countWordsAccurate } from "./helperFunction";
 import "./index.css"
 
 type TArticleCardProps = {
@@ -83,7 +83,7 @@ const ArticleCard:React.FC<TArticleCardProps> = ({data}) => {
         gap:'10px',
       }}>
         <Button onClickFunc={handleClick} btnText="Читать в источнике" bg='#7CE3E1' textColor='black' maxWidth={223} />
-        <span>{parseXmlText(data.content.markup).length} слов</span>
+        <span>{countWordsAccurate(parseXmlText(data.content.markup))} слов(-a)</span>
       </div>
     </div>
   )

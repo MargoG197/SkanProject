@@ -49,4 +49,10 @@ function parseXmlText(xmlString: string): string {
 }
 
 
-export {parseXmlText}
+function countWordsAccurate(text: string): number {
+  const wordRegex = /[a-zA-Zа-яА-ЯёЁ0-9\-']+/g;
+  const matches = text.match(wordRegex);
+  return matches ? matches.length : 0;
+}
+
+export {parseXmlText, countWordsAccurate}

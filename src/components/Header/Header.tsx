@@ -76,17 +76,18 @@ const Header = () => {
 
           {isAuthenticated ? (
             <>
-                <LimitCard />
+            <LimitCard />
               <div
                 className="userNameSection"
-                style={{
+              >
+                <div style={{
                   flexDirection: "column",
+                  justifyContent:'flex-end',
                   alignItems: "flex-end",
                   height: "32px",
                   width: "111px",
-                }}
-              >
-                <p style={{ color: "#333", margin: "0" }}>Алексей А.</p>
+                  textAlign:'right',
+                }}><p style={{ color: "#333", margin: "0"}}>Алексей А.</p>
                 <button
                   onClick={logout}
                   style={{
@@ -97,7 +98,9 @@ const Header = () => {
                   }}
                 >
                   Выйти
-                </button>
+                  </button>
+                </div>
+                <img src="../../../src/icons/Ava.png"/>
               </div>
             </>
           ) : (

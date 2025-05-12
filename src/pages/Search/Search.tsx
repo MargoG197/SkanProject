@@ -7,14 +7,14 @@ import { useHistogramSearchMutation, useObjectSearchMutation } from '../../servi
 import { THistogramData, ThistogramResult, TObjectResult } from '../../types/types';
 import { useDocumentsSearchMutation } from '../../services/documentsService';
 import SearchResultSection from "../../components/SearchResultSection/SearchResultSection";
+import { useNavigate } from 'react-router-dom';
 
 
-
-const SearchPage = ()=>{
-	const [reqestHistogram, {}] = useHistogramSearchMutation();
-  const [requestObject, { }] = useObjectSearchMutation();
-  const [requestArt, { }] = useDocumentsSearchMutation();
-
+const SearchPage = () => {
+	const [reqestHistogram, { }] = useHistogramSearchMutation();
+	const [requestObject, { }] = useObjectSearchMutation();
+	const [requestArt, { }] = useDocumentsSearchMutation();
+	const {isAuthenticated} = useAuth();
 	const [isSearching, setIsSearching] = useState(false)
 	const [isSearchingArticles, setIsSearchingArticles] = useState(false)
 	const { token } = useAuth();
@@ -94,8 +94,8 @@ const SearchPage = ()=>{
 					setHistogramResponse(result.data);
 					setObjectSearchResponse(result2.items)
 					setIsSearching(false)
-					console.log(result, "reqestHistogram")
-					console.log(result2, "requestObject")
+					// console.log(result, "reqestHistogram")
+					// console.log(result2, "requestObject")
 				} catch (err) {
 					setIsSearching(false)
 		 console.log(err)
@@ -105,12 +105,10 @@ const SearchPage = ()=>{
 
 
 	  async function requestArticles(arr:string[]) {
-			// {ids: string[]}
 			if (token) {
 				setIsSearchingArticles(true)
 				try {
 					const result = await requestArt({ idObj: {ids: arr }, token: token }).unwrap();
-					console.log(result, "articles")
 					setArticles(result)
 					setIsSearchingArticles(false)
 				} catch (err) {
@@ -123,17 +121,34 @@ const SearchPage = ()=>{
 		let count = 0;
 		let lastIndex = 10;
 	
-	useEffect(() => {
-		if (objectSearchResponse.length >0) {
-				const arr: string[] = [];
+	function updateArticles() {
+		if (objectSearchResponse.length > 0 ) {
+			const arr: string[] = [];
 			const objForAction = objectSearchResponse.slice(count, lastIndex)
 			objForAction.forEach(item => arr.push(item.encodedId));
-			console.log({ids: arr }, "arr")
+
 			requestArticles(arr)
+			count += 10;
+			lastIndex += 10;
 			}
-			
+	}
+	
+	useEffect(() => {
+		updateArticles()
 		}, [objectSearchResponse])
 	
+	
+		const navigate = useNavigate();
+
+	const redirect = () => {
+		navigate('/login');
+	}
+
+	useEffect(() => {
+		if (!isAuthenticated) {
+			redirect()
+		}
+	}, [isAuthenticated])
 	
 	return (
 		<div style={{
@@ -148,7 +163,8 @@ const SearchPage = ()=>{
 				isSearchingArticles={isSearchingArticles}
 				isSearching={isSearching}
 				histogramResponse={histogramResponse}
-        articles={articles}
+				articles={articles}
+				updateArticles={updateArticles}
 			/>}
 		<Footer />
 		</div>
