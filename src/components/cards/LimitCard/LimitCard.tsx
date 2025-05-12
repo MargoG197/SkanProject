@@ -7,7 +7,7 @@ import "./index.css"
 const LimitCard = () => {
     const { token } = useAuth(); // Получаем данные из контекста
     const [userData, setUserData] = useState<TAccInfo | null>(null);
-    const [requestUserInfo, {isLoading }] = useLazyRequestAccInfoQuery();
+    const [requestUserInfo, {isLoading}] = useLazyRequestAccInfoQuery();
 
   
   useEffect(() => {

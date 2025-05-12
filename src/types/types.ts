@@ -68,20 +68,15 @@ type TObjectResult = {
 }
 
 
-type ThistogramResult = {
-  data: [
-    {
-      data: [
-        {
-          date: string,
-          value: number
-        }
-      ],
-      histogramType: number
-    }
-  ]
-}
+type TTotalDocs = {data: { date: string, value: number }[], histogramType: 'totalDocuments'|'riskFactors'}
+type ThistogramResult = TTotalDocs[];
 
+type TFinalHistogramCard = {
+  date: string,
+  riskFactors: number,
+  totalDocs : number
+
+}
 
 type TTariff = {
   name: "Beginner" | "Pro" | "Business"
@@ -95,25 +90,25 @@ type TTariff = {
   textColor:string
 }
 
-type TArticleResponse = {
-  
-  ok: {
-    attributes: { isTechNews: boolean, isAnnouncement: boolean, isDigest: boolean, isSpeechRecognition: boolean, isReducedContent: boolean }
-    content: 
-    {markup: string}
-    dedupClusterId:string
-    entities:{companies: number[], people: number[], themes: string[], locations: string[]}
-    id:string
-    issueDate:string
-    language :string
-    plotClusterId : string
-    schemaVersion:string
-    source: { id: number, groupId: number, name: string, categoryId: number, levelId: number }
-    title:{text: string, markup: string}
-    url:string
-    version:number
-}
+type TArtcile = {
+  attributes: { isTechNews: boolean, isAnnouncement: boolean, isDigest: boolean, isSpeechRecognition: boolean, isReducedContent: boolean }
+  content: { markup: string }
+  dedupClusterId: string
+  entities: { companies: string[], people: string[], themes: string[], locations: string[] }
+  id: string
+  issueDate: string
+  language: "russian" | 'other'| 'unknown' 
+  wordCount: number;
+  plotClusterId:string
+  schemaVersion:string
+  source: { id: number, groupId: number, name: string, categoryId: number, levelId: number,}
+  title: {text: string, markup:string}
+  url:string
+  version: number
   }
+
+type TArticleResponse = { ok: TArtcile }[]
+
 
 
 type TAuth = {
@@ -133,17 +128,7 @@ type TAuth = {
     }
   }
   
-type TArtcile = {
-  
-    date: string;
-    source: string;
-    title: string;
-    category: string;
-    content: string[];
-    readMoreLink: string;
-    wordCount: number;
 
-  }
 
-export type { TTariff, TAuth, TToken, TAccInfo, THistogramData, ThistogramResult, TArtcile, TObjectResult,  TArticleResponse}
+export type { TTariff, TAuth, TToken, TAccInfo, THistogramData,TFinalHistogramCard, ThistogramResult, TArtcile, TObjectResult,  TArticleResponse}
 

@@ -1,23 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import HistogramCard from "../cards/HistogramCard/HistogramCard";
 import "./index.css";
+import { TFinalHistogramCard, ThistogramResult } from "../../types/types";
 
 
 
 type THistogramTableProps = {
-  cardsArray: {
-    date: string;
-    total: number;
-    risks: number;
-  }[];
+  cardsArray: ThistogramResult
+  isLoading:boolean
 };
 
-const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray }) => {
+const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray,  isLoading}) => {
 
   const [currentPosition, setCurrentPosition] = useState<number>(0);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [width, setWidth] = useState<number>(0); // Состояние для хранения ширины
   const [numberOfVisibleItems, setNumberOfVisibleItems] = useState<number>(0)
+  const [cards, setCards] = useState<TFinalHistogramCard[]>([])
   const blockRef = useRef<HTMLDivElement>(null);
   
       // Определяем ширину карточки и количество видимых карточек и ширину экрана
@@ -65,6 +64,25 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray }) => {
 
 // console.log(width, width/133, Math.ceil(width/133), numberOfVisibleItems )
 
+  useEffect(() => {
+    const cardsArr:TFinalHistogramCard[] = []
+    if (cardsArray.length > 0) {
+     console.log(cardsArray[0],"cardsArray[0]", cardsArray[1], 'cardsArray[1]')
+      const riskFactors = cardsArray[0].histogramType == 'riskFactors' ? cardsArray[0] : cardsArray[1];
+      const totalDocs = cardsArray[0].histogramType == 'totalDocuments' ? cardsArray[0] : cardsArray[1];
+     
+      riskFactors.data.forEach((i, ind) => {
+        const obj = {
+          date: i.date,
+          riskFactors: i.value,
+          totalDocs: totalDocs.data[ind].value
+        }
+     cardsArr.push(obj)
+      })
+      setCards(cardsArr)
+    }
+
+  }, [cardsArray])
 
   return (
     <div
@@ -103,11 +121,12 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray }) => {
         style={{
           marginBottom: "40px 0",
           display: 'flex',
-          justifyContent: "space-between",
+          justifyContent: "flex-start",
           width: '95%',
         }}
       >
         <button onClick={prevSlide} className="histogramTable_arrow" style={{border:"none", borderRadius:'8px', cursor:'pointer', }}><img  src="../../../src/icons/shevron_right.svg"/></button>
+       
         <div
           className="histogramTable_scrolldiv"
           style={{
@@ -133,7 +152,8 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray }) => {
             <p>Всего</p>
             <p>Риски</p>
           </div>
-          <div
+          {isLoading ? <div style={{width: '200px', display:'flex', alignItems:'center', justifyContent:'center'}}><div className="loader" ></div></div> : 
+             <div
              ref={blockRef} 
             style={{
             display: "flex",
@@ -142,10 +162,12 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray }) => {
             transform: `translateX(${currentPosition}px)`,
             transition: "transform 0.5s ease-in-out",
           }}>
-            {cardsArray.map((item) => (
-            <HistogramCard data={item} />
+            {cards.map((item) => (
+            <HistogramCard card={item} />
           ))}
           </div>
+         }
+
         </div>
         <button onClick={nextSlide} className="histogramTable_arrow" style={{ border: "none", borderRadius: '8px', cursor: 'pointer', }}>
           <img src="../../../src/icons/shevron_right.svg" style={{ rotate: "180deg", cursor: 'pointer' }} /></button>

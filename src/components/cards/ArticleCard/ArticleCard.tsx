@@ -1,18 +1,19 @@
 import { TArtcile } from "../../../types/types"
 import Button from "../../Button/Button";
 import { useNavigate } from "react-router-dom";
+import { parseXmlText } from "./helperFunction";
 import "./index.css"
 
 type TArticleCardProps = {
-  data:  TArtcile;
+  data: TArtcile;
 }
 
 
 const ArticleCard:React.FC<TArticleCardProps> = ({data}) => {
-  
+  console.log(data, 'data')
   const navigate = useNavigate();
   const handleClick = () => {
-  navigate(data.readMoreLink);
+  navigate(data.url);
 };
 
   return (
@@ -33,8 +34,8 @@ const ArticleCard:React.FC<TArticleCardProps> = ({data}) => {
         fontSize: "16px",
         color: "#949494"
       }}>
-        <p>{data.date}</p>
-        <p style={{textDecoration:'underline'}}>{data.source}</p>
+        <p>{data.issueDate}</p>
+        <p style={{textDecoration:'underline'}}>{data.source.name}</p>
 
       </div>
       {/* Основной заголовок */}
@@ -44,7 +45,7 @@ const ArticleCard:React.FC<TArticleCardProps> = ({data}) => {
         lineHeight: "1.3",
         color: "#222"
       }}>
-        {data.title}
+        {data.title.text}
       </h2>
 
       {/* Категория */}
@@ -57,9 +58,12 @@ const ArticleCard:React.FC<TArticleCardProps> = ({data}) => {
         fontWeight: "500",
         marginBottom: "16px"
       }}>
-        {data.category}
+        {data.attributes.isTechNews ? "Техничские новости" : "Другие новости"}
       </div>
-      <div style={{width:'100%', height:'158px', maxHeight:'158px', backgroundColor:'green', borderRadius:'8px', marginBottom:'20px', textAlign:'center', }}>pictute space</div>
+      {/* <div style={{
+        width: '100%', height: '158px', maxHeight: '158px', backgroundColor: 'green',
+        borderRadius: '8px', marginBottom: '20px', textAlign: 'center',
+      }}>{data.}</div> */}
       {/* Текст статьи */}
       <div style={{
         marginBottom: "20px",
@@ -68,11 +72,9 @@ const ArticleCard:React.FC<TArticleCardProps> = ({data}) => {
         overflowY: 'auto',
         maxHeight:'200px'
       }}>
-        {data.content.map((paragraph, index) => (
-          <p key={index} style={{ margin: "0 0 12px 0",  }}>
-            {paragraph}
+          <p  style={{ margin: "0 0 12px 0",  }}>
+            {parseXmlText(data.content.markup)}
           </p>
-        ))}
       </div>
 
       {/* Футер карточки */}
@@ -86,7 +88,7 @@ const ArticleCard:React.FC<TArticleCardProps> = ({data}) => {
         gap:'10px',
       }}>
         <Button onClickFunc={handleClick} btnText="Читать в источнике" bg='#7CE3E1' textColor='black' maxWidth={223} />
-        <span>{data.wordCount.toLocaleString()} слова</span>
+        {/* <span>{data.word} слова</span> */}
       </div>
     </div>
   )

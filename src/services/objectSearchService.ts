@@ -9,7 +9,7 @@ type TRequest = {
 
 export const objectSearchServiceAPI = apiSlice.injectEndpoints({
   endpoints: (build) => ({
-    histogramSearch: build.mutation < {data:ThistogramResult[]}, TRequest>({
+    histogramSearch: build.mutation < {data:ThistogramResult}, TRequest>({
       query: ({data, token}) => ({
         method: "POST",
         url: '/api/v1/objectsearch/histograms',

@@ -2,34 +2,24 @@ import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import { validateINN, validateDates } from './helperFunctions';
 import "./index.css"
-import { useAuth } from '../../context/AuthContext';
-import { useHistogramSearchMutation, useObjectSearchMutation } from '../../services/objectSearchService';
-import { THistogramData, ThistogramResult, TObjectResult } from '../../types/types';
-import { useDocumentsSearchMutation } from '../../services/documentsService';
+
 
 // import AuthForm from '../AuthForm/AuthForm';
 type TSearchFormProps = {
-  setIsSearching:React.Dispatch<React.SetStateAction<boolean>>
+  sendForm:(formData:any) =>void
 }
 
-const SearchForm:React.FC<TSearchFormProps> = ({setIsSearching}) => {
-
-
-  const [reqestHistogram, { }] = useHistogramSearchMutation();
-  const [requestObject, { }] = useObjectSearchMutation();
-  const [requestArt, { }] = useDocumentsSearchMutation();
-
+const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
 
   const [innError, setInnError] = useState<null | string>(null)
   const [startDateError, setStartDateError] = useState<null | string>(null);
   const [endDateError, setEndDateError] = useState<null | string>(null)
   const [disabled, setDisabled] = useState(true);
-  const [histogramResponse, setHistogramResponse] = useState<ThistogramResult[]>([]);
-  const [objectSearchResponse, setObjectSearchResponse] = useState<TObjectResult[]>([])
+ 
   const [formData, setFormData] = useState({
     inn: '',
     tone: 'any',
-    documentsCount: NaN,
+    documentsCount: 0,
     startDate: '',
     endDate: '',
     completeness: {
@@ -42,7 +32,7 @@ const SearchForm:React.FC<TSearchFormProps> = ({setIsSearching}) => {
     }
   });
 
-  const { token } = useAuth();
+ 
 
   useEffect(() => {
     if (validateINN(formData.inn).isValid && formData.documentsCount && formData.endDate && formData.startDate && startDateError==null && endDateError==null) {
@@ -105,109 +95,6 @@ const SearchForm:React.FC<TSearchFormProps> = ({setIsSearching}) => {
   };
 
 
-  async function sendForm() {
-
-
-
-    const obj:THistogramData  = {
-      "issueDateInterval": {
-        "startDate": formData.startDate,
-        "endDate": formData.endDate
-      },
-      "searchContext": {
-        "targetSearchEntitiesContext": {
-          "targetSearchEntities": [
-            {
-              type: "company",
-              sparkId: null,
-              entityId: null,
-              "inn": formData.inn,
-              "maxFullness": true,
-              "inBusinessNews": null
-            }
-          ],
-          "onlyMainRole": true,
-          "tonality": formData.tone,
-          "onlyWithRiskFactors": false,
-          "riskFactors": {
-            "and": [],
-            "or": [],
-            "not": []
-          },
-          "themes": {
-            "and": [],
-            "or": [],
-            "not": []
-          }
-        },
-        "themesFilter": {
-          "and": [],
-          "or": [],
-          "not": []
-        }
-      },
-      "searchArea": {
-        "includedSources": [],
-        "excludedSources": [],
-        "includedSourceGroups": [],
-        "excludedSourceGroups": []
-      },
-      "attributeFilters": {
-        "excludeTechNews": true,
-        "excludeAnnouncements": true,
-        "excludeDigests": true
-      },
-      "similarMode": "duplicates",
-      "limit": formData.documentsCount,
-      "sortType": "sourceInfluence",
-      "sortDirectionType": "desc",
-      "intervalType": "month",
-      "histogramTypes": [
-        "totalDocuments",
-        "riskFactors"
-      ]
-    }
-
-    
-
-    if (token) {
-      try {
-        const result = await reqestHistogram({ data: obj, token: token }).unwrap();
-        const result2 = await requestObject({ data: obj, token: token }).unwrap();
-        setHistogramResponse(result.data);
-        setObjectSearchResponse(result2.items)
-        setIsSearching(true)
-        console.log(result, "reqestHistogram")
-        console.log(result2, "requestObject")
-    } catch (err){
-   console.log(err)
-      }
-    }
-  }
-
-
-  async function requestArticles(arr:string[]) {
-    // {ids: string[]}
-    if (token) {
-      try {
-        const articles = await requestArt({ idObj: {ids: arr }, token: token }).unwrap();
-        console.log(articles, "articles")
-      } catch (err) {
-        console.log(err)
-      }
-    }
-}
-
-  let count = 0;
-  let lastIndex = 10;
-
-  useEffect(() => {
-    const arr: string[] = [];
-    const objForAction = objectSearchResponse.slice(count, lastIndex)
-    objForAction.forEach(item => arr.push(item.encodedId));
-    console.log({ids: arr }, "arr")
-    requestArticles(arr)
-  }, [objectSearchResponse])
 
 
   return (
@@ -288,7 +175,7 @@ const SearchForm:React.FC<TSearchFormProps> = ({setIsSearching}) => {
           placeholder='от 1 до 1000'
           min="1"
           max="1000"
-          value={formData.documentsCount}
+          value={formData.documentsCount || ''}
           onChange={handleChange}
           required
           style={{
@@ -386,7 +273,7 @@ const SearchForm:React.FC<TSearchFormProps> = ({setIsSearching}) => {
       </div>
         {/* Кнопка поиска */}
       <div className='searchForm_buttonDiv'>
-      <Button onClickFunc={sendForm} btnText="Поиск" bg='#5970FF' textColor='#FFFFFF' maxWidth={305} disabled={disabled} />
+      <Button onClickFunc={()=>sendForm(formData)} btnText="Поиск" bg='#5970FF' textColor='#FFFFFF' maxWidth={305} disabled={disabled} />
       <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '1rem', margin:'0'}}>
       * Обязательные к заполнению поля
       </p>

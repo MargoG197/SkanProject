@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import "./index.css";
 import { useAuth } from "../../context/AuthContext";
-
+import { useNavigate } from 'react-router-dom';
 
 const AuthForm: React.FC = () => {
 
@@ -12,6 +12,11 @@ const AuthForm: React.FC = () => {
   const holdTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const {login:loginFunc} = useAuth(); // Получаем данные из контекста
+  
+  const navigate = useNavigate();
+  const redirect = () => {
+    navigate('/');
+};
 
   // Обработчики для кнопки показа пароля
   const handleMouseDown = () => {
@@ -37,10 +42,11 @@ type TAuth = {
       login: login.trim(),
       password: password.trim()
     }
-console.log(obj, "object")
+// console.log(obj, "object")
     if (login.length > 0 && password.length > 0) {
       try {
-       const response =  await loginFunc(obj);
+        const response = await loginFunc(obj);
+        redirect()
         console.log(response, 'login response');
       } catch (err) {
         console.log(err, 'error')
@@ -49,6 +55,7 @@ console.log(obj, "object")
 }
 
 
+  
 
   return (
     <div

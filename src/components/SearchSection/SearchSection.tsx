@@ -3,9 +3,10 @@ import "./index.css"
 
 
 type TSearchSectionProps = {
-  setIsSearching:React.Dispatch<React.SetStateAction<boolean>>
+  // setIsSearching: React.Dispatch<React.SetStateAction<boolean>>
+  sendForm:(formData:any) =>void
 }
-const SearchSection:React.FC<TSearchSectionProps> = ({setIsSearching}) => {
+const SearchSection:React.FC<TSearchSectionProps> = ({sendForm}) => {
   
 
 
@@ -56,7 +57,7 @@ const SearchSection:React.FC<TSearchSectionProps> = ({setIsSearching}) => {
         </div>
         <div className="searchArea" style={{ width: '100%', display: 'flex', alignItems:'center', justifyContent:'space-between' }}>
          <div className="searchArea_searchForm" >
-            <SearchForm setIsSearching={setIsSearching} />
+            <SearchForm sendForm={sendForm} />
           </div>
         <img src="../../../src/icons/SearchPic.svg" className="searchArea_img"/>
         </div>
