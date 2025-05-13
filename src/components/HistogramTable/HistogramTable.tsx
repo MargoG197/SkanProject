@@ -17,13 +17,14 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray,  isLoading
   const [width, setWidth] = useState<number>(0); // Состояние для хранения ширины
   const [numberOfVisibleItems, setNumberOfVisibleItems] = useState<number>(0)
   const [cards, setCards] = useState<TFinalHistogramCard[]>([])
-  const blockRef = useRef<HTMLDivElement>(null);
-  // console.log(cardsArray, "cardsArray")
-      // Определяем ширину карточки и количество видимых карточек и ширину экрана
+  const contentRef = useRef<HTMLDivElement>(null);
+  
+
+  // Определяем ширину карточки и количество видимых карточек и ширину экрана
   useEffect(() => {
     const handleResize = () => {
-      if (blockRef.current) {
-        const blockWidth = blockRef.current.getBoundingClientRect().width;
+      if (contentRef.current) {
+        const blockWidth = contentRef.current.getBoundingClientRect().width;
         setWidth(blockWidth);
 
         const screenWidth = window.innerWidth;
@@ -60,7 +61,7 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray,  isLoading
     }
   };
 
-console.log(width, width/133, Math.ceil(width/133), numberOfVisibleItems )
+// console.log(width, width/133, Math.ceil(width/133), numberOfVisibleItems )
 
   useEffect(() => {
     const cardsArr:TFinalHistogramCard[] = []
@@ -79,7 +80,9 @@ console.log(width, width/133, Math.ceil(width/133), numberOfVisibleItems )
       })
       setCards(cardsArr)
     }
-  }, [cardsArray])
+    }, [cardsArray])
+  
+
 
   return (
     <div
@@ -123,15 +126,19 @@ console.log(width, width/133, Math.ceil(width/133), numberOfVisibleItems )
           width: '95%',
         }}
       >
-        <button onClick={prevSlide} className="histogramTable_arrow" style={{border:"none", borderRadius:'8px', cursor:'pointer', }}><img  src="../../../src/icons/shevron_right.svg"/></button>
+        <button onClick={prevSlide} className="histogramTable_arrow"
+          style={{ border: "none", borderRadius: '8px', cursor: 'pointer', }}
+        ><img src="../../../src/icons/shevron_right.svg" /></button>
        
         <div
           className="histogramTable_scrolldiv"
+
           style={{
             display: "flex",
             border: "4px solid #029491",
             borderRadius: "8px",
             maxWidth: '95%',
+            // maxWidth: `${containerWidth}px`,
             overflowX:'hidden',
           }}
         >
@@ -150,9 +157,9 @@ console.log(width, width/133, Math.ceil(width/133), numberOfVisibleItems )
             <p>Всего</p>
             <p>Риски</p>
           </div>
-          {isLoading ? <div style={{width: '200px', display:'flex', alignItems:'center', justifyContent:'center'}}><div className="loader" ></div></div> : 
+          {isLoading ? <div style={{width: '300px', display:'flex', alignItems:'center', justifyContent:'center'}}><div className="loader" ></div></div> :
              <div
-             ref={blockRef} 
+             ref={contentRef}
             style={{
             display: "flex",
             borderRadius: "8px",
@@ -167,7 +174,7 @@ console.log(width, width/133, Math.ceil(width/133), numberOfVisibleItems )
          }
 
         </div>
-        <button onClick={nextSlide} className="histogramTable_arrow" style={{ border: "none", borderRadius: '8px', cursor: 'pointer', }}>
+        <button onClick={nextSlide} className="histogramTable_arrow" style={{ border: "none", borderRadius: '8px', cursor: 'pointer', }} >
           <img src="../../../src/icons/shevron_right.svg" style={{ rotate: "180deg", cursor: 'pointer' }} /></button>
       </div>
     </div>
@@ -175,3 +182,4 @@ console.log(width, width/133, Math.ceil(width/133), numberOfVisibleItems )
 };
 
 export default HistogramTable;
+

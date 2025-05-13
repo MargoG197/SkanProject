@@ -40,7 +40,7 @@ const SearchResultSection: React.FC<TSearchResultsSectionProps> = ({
       setIsSearchingArticles(false);
     }
   }
-  // console.log(currentBatch, "currentBatch,")
+
 
   const loadNextBatch = () => {
     if (!hasMoreArticles || isSearchingArticles) return;
@@ -51,6 +51,9 @@ const SearchResultSection: React.FC<TSearchResultsSectionProps> = ({
     if (startIndex >= objectSearchResponse.length) {
       setHasMoreArticles(false);
       return;
+    }
+    if (endIndex >= objectSearchResponse.length) {
+      setHasMoreArticles(false);
     }
 
     const batchIds = objectSearchResponse
@@ -118,7 +121,7 @@ const SearchResultSection: React.FC<TSearchResultsSectionProps> = ({
             <ArticleCard key={article.ok.id} data={article.ok} />
           ))}
         </div>
-      {(hasMoreArticles && !isSearching && articles.length > 0) ? (
+      {(hasMoreArticles && !isSearching && articles.length > 0 ) ?(
         <Button 
           onClickFunc={loadNextBatch} 
           btnText={isSearchingArticles ? 'Загрузка...' : 'Показать больше'} 
@@ -127,7 +130,7 @@ const SearchResultSection: React.FC<TSearchResultsSectionProps> = ({
           maxWidth={355}
           disabled={isSearchingArticles}
         />
-      ): <p>Все результаты загружены</p>}
+      ):( articles.length != 0 &&<p> Все результаты загружены</p> ) }
     </div>
   );
 }

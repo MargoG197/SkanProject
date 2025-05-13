@@ -110,7 +110,7 @@ const SearchPage = () => {
 	}
 
 	useEffect(() => {
-		if (!isAuthenticated) {
+		if (!isAuthenticated && !localStorage.getItem('token')&& !token) {
 			redirect()
 		}
 	}, [isAuthenticated])

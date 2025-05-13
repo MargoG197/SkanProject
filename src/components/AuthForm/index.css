@@ -14,18 +14,21 @@
 width: 429px;
 height: 523px;
 }
-
-
-@media (max-width: 450px){
-
+@media (max-width: 580px){
 	.authForm_lock_img{
 		top:-60px;
 		left: 50px;
 }
+}
+
+
+@media (max-width: 450px){
+
+
 
 .authForm_container{
 	width: 90%;
-height: 523px;
+  height: 523px;
 }
 
 

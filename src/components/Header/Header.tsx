@@ -45,7 +45,6 @@ const Header = () => {
               style={{
                 listStyle: "none",
                 display: 'flex',
-        
                 boxSizing: "border-box",
                 padding: "0",
               }}

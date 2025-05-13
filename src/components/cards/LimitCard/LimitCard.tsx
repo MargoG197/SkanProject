@@ -29,9 +29,10 @@ const LimitCard = () => {
   
   return (
     <div
+      className="limitCard"
       style={{
         width: "175px",
-        minWidth:"175px",
+        // minWidth:"175px",
         height: "63px",
         borderRadius: "12px",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
@@ -42,6 +43,7 @@ const LimitCard = () => {
         alignItems:'center',
         backgroundColor: "#D9D9D9",
         boxSizing: "border-box",
+        marginRight:'20px'
       }}
     >
       {isLoading ? <div className="loader"></div> : <div

@@ -91,7 +91,7 @@ type TTariff = {
 }
 
 type TArtcile = {
-  attributes: { isTechNews: boolean, isAnnouncement: boolean, isDigest: boolean, isSpeechRecognition: boolean, isReducedContent: boolean }
+  attributes: { isTechNews: boolean, isAnnouncement: boolean, isDigest: boolean, isSpeechRecognition: boolean, isReducedContent: boolean, wordCount: number }
   content: { markup: string }
   dedupClusterId: string
   entities: { companies: string[], people: string[], themes: string[], locations: string[] }
