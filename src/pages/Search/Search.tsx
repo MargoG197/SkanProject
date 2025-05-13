@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useHistogramSearchMutation, useObjectSearchMutation } from '../../services/objectSearchService';
 import { THistogramData, ThistogramResult, TObjectResult } from '../../types/types';
-import { useDocumentsSearchMutation } from '../../services/documentsService';
+// import { useDocumentsSearchMutation } from '../../services/documentsService';
 import SearchResultSection from "../../components/SearchResultSection/SearchResultSection";
 import { useNavigate } from 'react-router-dom';
 
@@ -13,14 +13,12 @@ import { useNavigate } from 'react-router-dom';
 const SearchPage = () => {
 	const [reqestHistogram, { }] = useHistogramSearchMutation();
 	const [requestObject, { }] = useObjectSearchMutation();
-	const [requestArt, { }] = useDocumentsSearchMutation();
-	const {isAuthenticated} = useAuth();
+	const {isAuthenticated, token} = useAuth();
 	const [isSearching, setIsSearching] = useState(false)
-	const [isSearchingArticles, setIsSearchingArticles] = useState(false)
-	const { token } = useAuth();
+
+
 	const [histogramResponse, setHistogramResponse] = useState<ThistogramResult>([]);
 	const [objectSearchResponse, setObjectSearchResponse] = useState<TObjectResult[]>([])
-	const [articles, setArticles] = useState<any[]>([])
   const [openResults, setOpenResults]  = useState(false)
 	
 		async function sendForm(formData:any) {
@@ -94,8 +92,6 @@ const SearchPage = () => {
 					setHistogramResponse(result.data);
 					setObjectSearchResponse(result2.items)
 					setIsSearching(false)
-					// console.log(result, "reqestHistogram")
-					// console.log(result2, "requestObject")
 				} catch (err) {
 					setIsSearching(false)
 		 console.log(err)
@@ -104,38 +100,7 @@ const SearchPage = () => {
 		}
 
 
-	  async function requestArticles(arr:string[]) {
-			if (token) {
-				setIsSearchingArticles(true)
-				try {
-					const result = await requestArt({ idObj: {ids: arr }, token: token }).unwrap();
-					setArticles(result)
-					setIsSearchingArticles(false)
-				} catch (err) {
-					console.log(err)
-					setIsSearchingArticles(false)
-				}
-			}
-	}
-	
-		let count = 0;
-		let lastIndex = 10;
-	
-	function updateArticles() {
-		if (objectSearchResponse.length > 0 ) {
-			const arr: string[] = [];
-			const objForAction = objectSearchResponse.slice(count, lastIndex)
-			objForAction.forEach(item => arr.push(item.encodedId));
-
-			requestArticles(arr)
-			count += 10;
-			lastIndex += 10;
-			}
-	}
-	
-	useEffect(() => {
-		updateArticles()
-		}, [objectSearchResponse])
+	 
 	
 	
 		const navigate = useNavigate();
@@ -160,11 +125,9 @@ const SearchPage = () => {
 		<Header />
 			{!openResults && <SearchSection sendForm={sendForm} />}
 			{openResults && <SearchResultSection
-				isSearchingArticles={isSearchingArticles}
 				isSearching={isSearching}
 				histogramResponse={histogramResponse}
-				articles={articles}
-				updateArticles={updateArticles}
+				objectSearchResponse={objectSearchResponse}
 			/>}
 		<Footer />
 		</div>

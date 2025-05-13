@@ -18,7 +18,7 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray,  isLoading
   const [numberOfVisibleItems, setNumberOfVisibleItems] = useState<number>(0)
   const [cards, setCards] = useState<TFinalHistogramCard[]>([])
   const blockRef = useRef<HTMLDivElement>(null);
-  
+  // console.log(cardsArray, "cardsArray")
       // Определяем ширину карточки и количество видимых карточек и ширину экрана
   useEffect(() => {
     const handleResize = () => {
@@ -58,15 +58,14 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray,  isLoading
       );
       setNumberOfVisibleItems(numberOfVisibleItems-1)
     }
-    
   };
 
-// console.log(width, width/133, Math.ceil(width/133), numberOfVisibleItems )
+console.log(width, width/133, Math.ceil(width/133), numberOfVisibleItems )
 
   useEffect(() => {
     const cardsArr:TFinalHistogramCard[] = []
     if (cardsArray.length > 0) {
-     console.log(cardsArray[0],"cardsArray[0]", cardsArray[1], 'cardsArray[1]')
+    //  console.log(cardsArray[0],"cardsArray[0]", cardsArray[1], 'cardsArray[1]')
       const riskFactors = cardsArray[0].histogramType == 'riskFactors' ? cardsArray[0] : cardsArray[1];
       const totalDocs = cardsArray[0].histogramType == 'totalDocuments' ? cardsArray[0] : cardsArray[1];
      
@@ -80,7 +79,6 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray,  isLoading
       })
       setCards(cardsArr)
     }
-
   }, [cardsArray])
 
   return (

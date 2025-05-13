@@ -9,7 +9,7 @@ type TRequest = {
 
 export const documentsSearchServiceAPI = apiSlice.injectEndpoints({
   endpoints: (build) => ({
-     documentsSearch: build.mutation< TArticleResponse[], TRequest>({
+     documentsSearch: build.mutation< TArticleResponse, TRequest>({
       query: ({idObj, token}) => ({
         method: "POST",
         url: '/api/v1/documents',
