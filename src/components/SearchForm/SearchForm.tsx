@@ -15,7 +15,7 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
   const [startDateError, setStartDateError] = useState<null | string>(null);
   const [endDateError, setEndDateError] = useState<null | string>(null)
   const [disabled, setDisabled] = useState(true);
- 
+  const [isNumberAccurate, setIsNumberAccurate] = useState<boolean|null>(null);
   const [formData, setFormData] = useState({
     inn: '',
     tone: 'any',
@@ -32,18 +32,18 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
     }
   });
 
- 
 
-  useEffect(() => {
-    if (validateINN(formData.inn).isValid
-      && formData.documentsCount &&
-      validateDates(formData.startDate, formData.endDate).isValid &&
-      formData.endDate && formData.startDate
-      && startDateError == null && endDateError == null) {
+  function checkValidity(){
+    if (validateINN(formData.inn).isValid && validateDates(formData.startDate, formData.endDate).isValid && checkNumber() ) {
       setDisabled(false)
     } else {
       setDisabled(true)
     }
+  }
+ 
+
+  useEffect(() => {
+    checkValidity()
   }, [formData])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -66,6 +66,9 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+    
+    checkNumber();
+    checkValidity();
   };
 
   const handleCompletenessChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,15 +82,22 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(formData);
-  };
 
+
+  function checkNumber() {
+    if (formData.documentsCount >= 1 && formData.documentsCount <= 1000) {
+      setIsNumberAccurate(true)
+      return true
+    } else {
+      setIsNumberAccurate(false)
+      return false
+    }
+
+}
   const handleBlur = () => {
     if (formData.startDate, formData.endDate) {
       const result = validateDates(formData.startDate, formData.endDate);
-      // console.log(result)
+
       if (result.isValid == false) {
         result.errors.startDate ? setStartDateError(result.errors.startDate) : result.errors.dateRange ?setStartDateError(result.errors.dateRange) : setStartDateError(null)
         result.errors.endDate ? setEndDateError(result.errors.endDate) : setEndDateError(null);
@@ -104,7 +114,7 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
   return (
     <form 
       className='searchForm_form'
-      onSubmit={handleSubmit}
+      onSubmit={e=> e.preventDefault()}
       style={{
         width: '100%',
         backgroundColor: '#fff',
@@ -173,7 +183,8 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
         <label style={{ display: 'block',  }}>
           Количество документов в выдаче*
         </label>
-        <input
+          <input
+          onBlur={checkNumber}
           type="number"
           name="documentsCount"
           placeholder='от 1 до 1000'
@@ -192,7 +203,8 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
             boxShadow: '0 0 0 2px rgba(59, 130, 246, 0)',
             transition: 'box-shadow 0.2s, border-color 0.2s'
           }}
-        />
+          />
+    {isNumberAccurate === false && <p style={{ color:'red', padding:'0', margin:'0', fontSize:'12px'}}>Допустимое значение от 1 до 1000 включительно</p>}
       </div>
       {/* Диапазон дат */}
       <div >
