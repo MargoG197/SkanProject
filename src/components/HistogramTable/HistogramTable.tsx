@@ -28,20 +28,20 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray,  isLoading
         const numberOfVItems = screenWidth >= 404 ? Math.floor(containerW / 133) : Math.floor(containerW / 295);
        const contFinalWidth = (numberOfVItems * (screenWidth >= 404 ? 133 : 295)) > containerW ? (numberOfVItems-1) * (screenWidth >= 404 ? 133 : 295) : numberOfVItems * (screenWidth >= 404 ? 133 : 295)
         setContainerWidth(contFinalWidth)
-        console.log(contFinalWidth /(screenWidth >= 404 ? 133 : 295), contFinalWidth, "contFinalWidth")
+        setCurrentPosition(0)
         setNumberOfVisibleItems(contFinalWidth /(screenWidth >= 404 ? 133 : 295))
-      }
+    }
     
-
+   
     window.addEventListener('resize', handleResize);
-      handleResize(); // Инициализация при монтировании
-      
+    handleResize(); // Инициализация при монтировании
      return () => { window.removeEventListener('resize', handleResize);  } 
    
  }, []);
 
+
+  
   const nextSlide = () => {
-   
     if (numberOfVisibleItems >= cardsArray[0]?.data?.length) {
 
     } else {
@@ -124,7 +124,6 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray,  isLoading
           marginBottom: "40px 0",
           display: 'flex',
           justifyContent: "flex-start",
-          // width: '95%',
         }}
       >
         <button onClick={prevSlide} className="histogramTable_arrow"
@@ -132,16 +131,13 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray,  isLoading
         ><img src="../../../src/icons/shevron_right.svg" /></button>
         <div
           className="histogramTable_scrolldiv"
-          // ref={contentRef}
           style={{
             display: "flex",
             border: "4px solid #029491",
             borderRadius: "8px",
-            // maxWidth: '95%',
             width:'fit-content',
             overflowX:'hidden',
-          }}
-        >
+          }}>
           <div
             className="histogramTable_TableHead"
             style={{
@@ -150,21 +146,18 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray,  isLoading
               backgroundColor: "#029491",
               alignItems: "center",
               zIndex:'3'
-            }}
-          >
+            }}>
             <p>Период</p>
             <p>Всего</p>
             <p>Риски</p>
           </div>
           {isLoading ? <div style={{width: '300px', display:'flex', alignItems:'center', justifyContent:'center'}}><div className="loader" ></div></div> :
-             <div
-            
+           <div
             style={{
             borderRadius: "8px",
             width: `${containerWidth}px`,
             minWidth: `${containerWidth}px`,
             maxWidth:`${containerWidth}px`,
-                // maxWidth: '90%',
             overflow:'hidden'
               }}>
               <div style={{
@@ -179,10 +172,8 @@ const HistogramTable: React.FC<THistogramTableProps> = ({ cardsArray,  isLoading
               </React.Fragment>
               ))}
               </div>
-              
           </div>
          }
-
         </div>
         <button onClick={nextSlide} className="histogramTable_arrow" style={{ border: "none", borderRadius: '8px', cursor: 'pointer', }} >
           <img src="../../../src/icons/shevron_right.svg" style={{ rotate: "180deg", cursor: 'pointer' }} /></button>

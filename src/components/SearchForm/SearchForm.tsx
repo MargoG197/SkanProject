@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import { validateINN, validateDates } from './helperFunctions';
 import "./index.css"
+import { TForm } from '../../types/types';
 
 
 // import AuthForm from '../AuthForm/AuthForm';
@@ -16,13 +17,14 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
   const [endDateError, setEndDateError] = useState<null | string>(null)
   const [disabled, setDisabled] = useState(true);
   const [isNumberAccurate, setIsNumberAccurate] = useState<boolean|null>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<TForm>({
     inn: '',
     tone: 'any',
     documentsCount: 0,
     startDate: '',
     endDate: '',
-    completeness: {
+    optionalFactors:{
+      fullness:false,
       businessContext: false,
       mainRole: false,
       riskFactors: false,
@@ -66,8 +68,6 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
-    
-    checkNumber();
     checkValidity();
   };
 
@@ -75,8 +75,8 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
     const { name, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      completeness: {
-        ...prev.completeness,
+      optionalFactors: {
+        ...prev.optionalFactors,
         [name]: checked
       }
     }));
@@ -85,7 +85,8 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
 
 
   function checkNumber() {
-    if (formData.documentsCount >= 1 && formData.documentsCount <= 1000) {
+    // console.log(formData.documentsCount)
+    if (formData.documentsCount > 0 && formData.documentsCount <= 1000) {
       setIsNumberAccurate(true)
       return true
     } else {
@@ -175,7 +176,6 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
           <option value="any">Любая</option>
           <option value="positive">Позитивная</option>
           <option value="negative">Негативная</option>
-          <option value="neutral">Нейтральная</option>
         </select>
       </div>
       {/* Количество документов */}
@@ -219,6 +219,7 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
               type="date"
               placeholder='Дата начала'
               name="startDate"
+              onInput={checkNumber}
               value={formData.startDate}
               onChange={handleChange}
               required
@@ -260,7 +261,7 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
             { id: 'fullness', label: 'Признак максимальной полноты', disabled:false},
             { id: 'businessContext', label: 'Упоминания в бизнес-контексте', disabled:false },
             { id: 'mainRole', label: 'Главная роль в публикации', disabled:false},
-            { id: 'riskFactors', label: 'Публикации только с риск-факторами' , disabled:true},
+            { id: 'riskFactors', label: 'Публикации только с риск-факторами' , disabled:false},
             { id: 'technicalNews', label: 'Включать технические новости рынков', disabled:true },
             { id: 'announcements', label: 'Включать анонсы и календари' , disabled:false},
             { id: 'newsDigests', label: 'Включать сводки новостей', disabled:true }
@@ -270,7 +271,7 @@ const SearchForm:React.FC<TSearchFormProps> = ({sendForm}) => {
                 type="checkbox"
                 id={item.id}
                 name={item.id}
-                checked={formData.completeness[item.id as keyof typeof formData.completeness]}
+                checked={formData.optionalFactors[item.id as keyof typeof formData.optionalFactors]}
                 onChange={handleCompletenessChange}
                 disabled={item.disabled}
                 style={{

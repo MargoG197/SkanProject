@@ -4,7 +4,7 @@ import SearchSection from "../../components/SearchSection/SearchSection";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useHistogramSearchMutation, useObjectSearchMutation } from '../../services/objectSearchService';
-import { THistogramData, ThistogramResult, TObjectResult } from '../../types/types';
+import { TForm, THistogramData, ThistogramResult, TObjectResult } from '../../types/types';
 // import { useDocumentsSearchMutation } from '../../services/documentsService';
 import SearchResultSection from "../../components/SearchResultSection/SearchResultSection";
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +21,7 @@ const SearchPage = () => {
 	const [objectSearchResponse, setObjectSearchResponse] = useState<TObjectResult[]>([])
   const [openResults, setOpenResults]  = useState(false)
 	
-		async function sendForm(formData:any) {
+		async function sendForm(formData:TForm) {
 			const obj:THistogramData  = {
 				"issueDateInterval": {
 					"startDate": formData.startDate,
@@ -35,13 +35,13 @@ const SearchPage = () => {
 								sparkId: null,
 								entityId: null,
 								"inn": formData.inn,
-								"maxFullness": true,
+								"maxFullness": formData.optionalFactors.fullness,
 								"inBusinessNews": null
 							}
 						],
-						"onlyMainRole": true,
+						"onlyMainRole": formData.optionalFactors.mainRole,
 						"tonality": formData.tone,
-						"onlyWithRiskFactors": false,
+						"onlyWithRiskFactors": formData.optionalFactors.riskFactors,
 						"riskFactors": {
 							"and": [],
 							"or": [],
@@ -67,7 +67,7 @@ const SearchPage = () => {
 				},
 				"attributeFilters": {
 					"excludeTechNews": true,
-					"excludeAnnouncements": true,
+					"excludeAnnouncements": formData.optionalFactors.announcements == false ? true: false,
 					"excludeDigests": true
 				},
 				"similarMode": "duplicates",
@@ -84,6 +84,7 @@ const SearchPage = () => {
 			
 	
 			if (token) {
+				console.log( obj, " obj")
 				setOpenResults(true)
 				setIsSearching(true)
 				try {

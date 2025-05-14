@@ -128,7 +128,23 @@ type TAuth = {
     }
   }
   
+type TForm = {
+    inn: string,
+    tone: 'any'| 'positive' |'negative',
+    documentsCount: number,
+    startDate: string,
+    endDate: string,
+  optionalFactors: {
+    fullness: boolean,
+    businessContext: boolean,
+    mainRole: boolean,
+    riskFactors: boolean,
+    technicalNews: boolean,
+    announcements: boolean,
+    newsDigests: boolean,
+  }
+  }
 
 
-export type { TTariff, TAuth, TToken, TAccInfo, THistogramData,TFinalHistogramCard, ThistogramResult, TArtcile, TObjectResult,  TArticleResponse}
+export type { TTariff, TAuth, TToken, TAccInfo, THistogramData,TFinalHistogramCard, ThistogramResult, TArtcile, TObjectResult,  TArticleResponse, TForm}
 
