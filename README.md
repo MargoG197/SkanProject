@@ -52,3 +52,7 @@ export default tseslint.config({
   },
 })
 ```
+/// Чтобы запустить проект необходимо выполнить три команды
+git clone https://github.com/MargoG197/SkanProject.git
+npm install
+npm run dev
